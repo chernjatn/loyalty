@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoyaltyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth.api')->group(function () {
+    Route::prefix("{loyalty_id}")->group(function () {
+        Route::prefix("client")->group(function () {
+            Route::post('{clientTel}/verify', [LoyaltyController::class, 'verify']);
+            Route::get('{clientTel}/card', [LoyaltyController::class, 'card']);
+            Route::get('{clientTel}/card/balance', [LoyaltyController::class, 'balance']);
+        });
+        Route::resource('client', LoyaltyController::class)->only([
+            'store', 'show'
+        ]);
+    });
+
 });
