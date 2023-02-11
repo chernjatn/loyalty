@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoyaltyController;
+use App\Enums\LoyaltyType;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +17,16 @@ use App\Http\Controllers\LoyaltyController;
 */
 
 Route::middleware('auth.api')->group(function () {
-    Route::prefix("{loyalty_id}")->group(function () {
-        Route::prefix("client")->group(function () {
-            Route::post('{clientTel}/verify', [LoyaltyController::class, 'verify']);
-            Route::get('{clientTel}/card', [LoyaltyController::class, 'card']);
-            Route::get('{clientTel}/card/balance', [LoyaltyController::class, 'balance']);
+    Route::prefix('{loyaltyType}')->group(function () {
+        Route::prefix('client')->group(function () {
+            Route::prefix('{clientTel}')->group(function () {
+                Route::get('', [LoyaltyController::class, 'checkIsCard']);
+                Route::get('card', [LoyaltyController::class, 'card']);
+                Route::post('card/{cardId}/balance', [LoyaltyController::class, 'balance']);
+                Route::post('verify', [LoyaltyController::class, 'verify']);
+                Route::post('card', [LoyaltyController::class, 'register']);
+                Route::post('create', [LoyaltyController::class, 'create']);
+            });
         });
-        Route::resource('client', LoyaltyController::class)->only([
-            'store', 'show'
-        ]);
     });
-
 });
