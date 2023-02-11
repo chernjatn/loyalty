@@ -36,12 +36,12 @@ class ManzanaDriver implements LoyaltyDriver
     {
         $closure = fn () => transform($this->getLoyaltyCustomerByPhone($phone, $useCache), fn (LoyaltyCustomer $contact) => (new CardRequest($this->loyaltyType, $contact))->processRequest());
 
-        //if (!$useCache) {
-        //LoyaltyCache::flushCurrentCustomerCache();
-        return $closure();
-        // }
+        if (!$useCache) {
+            LoyaltyCache::flushCurrentCustomerCache();
+            return $closure();
+        }
 
-        //return LoyaltyCache::rememberCurrentCustomerCache('getloycardsbyphone:' . $phone->getPhoneNumber(), $closure);
+        return LoyaltyCache::rememberCurrentCustomerCache('getloycardsbyphone:' . $phone->getPhoneNumber(), $closure);
     }
 
     public function getLoyaltyCustomerByPhone(Phone $phone, bool $useCache = true): ?LoyaltyCustomer

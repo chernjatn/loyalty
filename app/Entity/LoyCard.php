@@ -8,7 +8,7 @@ class LoyCard
 {
     public function __construct(
         private string $number,
-        private LoyCardType $type,
+        //private LoyCardType $type,
         private ?int $balance = null
     ) {
     }
@@ -18,10 +18,10 @@ class LoyCard
         return $this->number;
     }
 
-    public function getType(): LoyCardType
-    {
-        return $this->type;
-    }
+//    public function getType(): LoyCardType
+//    {
+//        return $this->type;
+//    }
 
     public function getBalance(): int
     {

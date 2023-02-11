@@ -3,7 +3,7 @@
 namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
 use Illuminate\Support\Collection;
-use Ultra\Shop\Enums\LoyCardType;
+use App\Enums\LoyCardType;
 use App\Entity\LoyCard;
 
 class CardRequest extends BaseByContactRequest
