@@ -3,8 +3,8 @@ services:
     app:
         build:
             args:
-                user: andros
-                uid: 1000
+                user: 'chernyatinai'
+                uid: 1004
             context: ..
             dockerfile: ./docker/Dockerfile
         image: travellist
@@ -23,8 +23,8 @@ services:
         environment:
             MYSQL_DATABASE: 'laraapp_db'
             MYSQL_ROOT_PASSWORD:
-#            MYSQL_PASSWORD: ${DB_PASSWORD}
-#            MYSQL_USER: ${DB_USERNAME}
+            #            MYSQL_PASSWORD: ${DB_PASSWORD}
+            #            MYSQL_USER: ${DB_USERNAME}
             SERVICE_TAGS: dev
             SERVICE_NAME: mysql
         volumes:
@@ -37,35 +37,22 @@ services:
         container_name: travellist-nginx
         restart: unless-stopped
         ports:
-            - 8000:80
+            - 80:80
         volumes:
             - ./:/var/www
             - ../docker/nginx:/etc/nginx/conf.d/
         networks:
             - travellist
 
+    redis:
+        image: redis:alpine
+        container_name: app_redis
+        volumes:
+            - ../docker/redis:/usr/local/etc/redis/redis.conf
+        ports:
+            - 6379:6379
+        networks:
+            - travellist
 networks:
     travellist:
         driver: bridge
-#version: '3.7'
-#services:
-#    app:
-#        build:
-#            context: ..
-#            dockerfile: ./docker/Dockerfile
-#        image: 'laravelapp'
-#        ports:
-#            - 8080:80
-#        volumes:
-#            - ./:/var/www
-#    db:
-#        image: mariadb:10
-#        restart: always
-#        ports:
-#        - "3306:3306"
-#        environment:
-#            MYSQL_DATABASE: 'laraapp_db'
-#            MYSQL_ALLOW_EMPTY_PASSWORD: 1
-#            MYSQL_ROOT_PASSWORD: ""
-#        volumes:
-#        - ./db:/var/lib/mysql
