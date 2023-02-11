@@ -2,136 +2,86 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Requests\PhoneRequest;
+use App\Requests\ClientCreateRequest;
+use App\Requests\SmsVerificationRequest;
 use App\Requests\CardRequest;
+use App\Services\Sms\NotificationService;
+use App\Services\Sms\SmsNotifiable;
 
 class LoyaltyController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * check if there is a card
+     * @param PhoneRequest $request
      */
-    public function index(Request $request)
+    public function checkIsCard(PhoneRequest $request)
     {
-        dd($request->all(), 'test');
+        $existsCard = $this->loyaltyManager->existsCard($request->getPhone());
+
+        return getResponse()->success()
+            ->setData([
+                'existsCard' => $existsCard
+            ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * send code via sms
+     * @param PhoneRequest $request
      */
-
-    public function card(Request $request)
+    public function verify(PhoneRequest $request)
     {
-        dd('card');
+        $smsVerification = new NotificationService(new SmsNotifiable(session()->getId(), $request->getPhone()));
+
+        return getResponse()->success()
+            ->setData([
+                'status' => true,
+                'expiration time' => $smsVerification->gen()
+            ]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * get a card
+     * @param SmsVerificationRequest $request
      */
-    public function store(Request $request)
+    public function card(SmsVerificationRequest $request)
     {
-        dd('create');
+        $cardClient = $this->loyaltyManager->getLoyCardsByPhone($request->getPhone())->getNumber();
+
+        return getResponse()->success()
+            ->setData([
+                'status' => true,
+                'card' => $cardClient
+            ]);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $channel_id
-     * @param  \Illuminate\Http\PhoneRequest  $phone
-     * @return \Illuminate\Http\Response
+     * get active balance
+     * @param CardRequest $request
      */
-    public function show($channel_id, PhoneRequest $phone)
+    public function balance(CardRequest $request)
     {
-        dd('show');
-    }
+        $activeBalance = $this->loyaltyManager->getLoyCardsByPhone($request->getPhone())->getBalance();
 
+        return getResponse()->success()
+            ->setData([
+                'status' => true,
+                'activeBalance' => $activeBalance
+            ]);
+    }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * creates a new client with binding card or will update existing fields
+     * @param ClientCreateRequest $request
      */
-    public function destroy($id)
+    public function create(ClientCreateRequest $request)
     {
-        //
-    }
+        $cardClient = $this->loyaltyManager->registerLoyCard($request->getDTO())->getNumber();
 
-    public function verify($request)
-    {
-        dd('verify');
-        if (FALSE === $this->validate($request->all(),
-                ['mobile' => 'required|regex:/^1[34578]\d{9}$/|unique:users'], [
-                    'mobile.required' => 'Пожалуйста, введите номер телефона',
-                    'mobile.regex' => 'Неверный формат номера телефона',
-                    'mobile.unique' => 'Номер мобильного телефона уже существует'
-                ])) {
-            return false;
-        }
-
-        $mobile = trim($request->get('mobile'));
-        $code = str_pad(random_int(1, 9999), 4, 0, STR_PAD_LEFT);
-
-
-        try {
-            $easySms->send($mobile,
-                ['content' => $code]);
-
-        } catch (\GuzzleHttp\Exception\ClientException $exception) {
-            $response = $exception->getResponse();
-            $result = json_decode($response->getBody()->getContents(), true);
-            $this->setMsg($result['msg'] ?? 'Отправка SMS ненормальная');
-            return false;
-        }
-
-        $key = 'verificationCode' . str_random(15);
-        $expiredAt = now()->addMinutes(1);
-        Cache::put($key, ['mobile' => $mobile, 'code' => $code], $expiredAt);
-
-        return [
-            'verification_key' => $key,
-            'expiredAt' => $expiredAt->toDateTimeString(),
-            'verification_code' => $code
-        ];
-    }
-
-    public function balance($request)
-    {
-        dd('balance');
-    }
-
-    public function compareCode($mobile, $verification_key, $code)
-    {
-        $verifyData = Cache::get($verification_key);
-        if (!$verifyData) {
-            $this->setMsg('Код подтверждения истек');
-            return false;
-        }
-
-        if (!hash_equals($code, (string)$verifyData['code'])) {
-            $this->setMsg('Ошибка кода подтверждения');
-            return false;
-        }
-
-        Cache::forget($verification_key);
-
-        $user = User::create([
-            'mobile' => $mobile,
-            'password' => bcrypt($password)
-        ]);
-
-        if (!$user) {
-            $this->setMsg('Регистрация не удалась');
-            return false;
-        }
-
-        return true;
+        return getResponse()->success()
+            ->setData([
+                'status' => true,
+                'card' => $cardClient
+            ]);
     }
 }
