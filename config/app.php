@@ -194,6 +194,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ApiServiceProvider::class,
 
     ],
 
@@ -209,6 +210,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'RedisManager' => Illuminate\Support\Facades\Redis::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
