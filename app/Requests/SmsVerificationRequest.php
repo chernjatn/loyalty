@@ -7,8 +7,8 @@ class SmsVerificationRequest extends PhoneRequest
     public function rules()
     {
         return parent::rules() + [
-               // 'sentCode'         => 'required',
-               // 'verificationCode' => 'required|same:sentCode',
+                'sentCode'         => 'required',
+                'verificationCode' => 'required|same:sentCode',
             ];
     }
 

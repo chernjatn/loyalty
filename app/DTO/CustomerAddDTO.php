@@ -65,26 +65,6 @@ class CustomerAddDTO implements BaseDTO
         }
     }
 //
-//    public function messages(): array
-//    {
-//        return [
-//            'email.required'       => __('customer.email_required'),
-//            'email.email'          => __('customer.email_required'),
-//            'email.max'            => __('customer.email_required'),
-//            'phone.required'       => __('customer.phone_required'),
-//            'phone.regex'          => __('customer.phone_mallformed'),
-//            'password.required'    => __('customer.password_required'),
-//            'firstName.required'   => __('customer.first_name_required'),
-//            'lastName.required'    => __('customer.last_name_required'),
-//            'secondName.string'    => __('customer.second_name_required'),
-//            'birthdate.required'   => __('customer.birthdate_required'),
-//            'birthdate.date'       => __('customer.birthdate_invalid'),
-//            'birthdate.before'     => __('customer.birthdate_invalid'),
-//            'gender.required'      => __('customer.gender_required'),
-//            'prefConn.required'    => __('customer.pref_conn_required'),
-//        ];
-//    }
-//
 //    public function getPassword(): string
 //    {
 //        return $this->password;
@@ -154,35 +134,4 @@ class CustomerAddDTO implements BaseDTO
     {
         return $this->status;
     }
-
-//    public function __serialize(): array
-//    {
-//        return [
-//            'email'        => $this->email,
-//            'phone'        => $this->phone,
-//            'firstName'    => $this->firstName,
-//            'lastName'     => $this->lastName,
-//            'secondName'   => $this->secondName,
-//            'mailingAgree' => $this->mailingAgree,
-//            'smsAgree'     => $this->smsAgree,
-//            'prefConn'     => $this->prefConn?->value,
-//            'birthdate'    => $this->birthdate?->timestamp,
-//            'gender'       => $this->gender?->value,
-//            'status'       => $this->status->value,
-//        ];
-//    }
-//
-//    public function __unserialize(array $data): void
-//    {
-//        $this->email        = $data['email'];
-//        $this->phone        = $data['phone'];
-//        $this->firstName    = $data['firstName'];
-//        $this->lastName     = $data['lastName'];
-//        $this->secondName   = $data['secondName'];
-//        $this->mailingAgree = $data['mailingAgree'];
-//        $this->prefConn     = transform($data['prefConn'],  static fn ($v) => ContactType::fromValue($v));
-//        $this->birthdate    = transform($data['birthdate'], static fn ($v) => Carbon::createFromTimestamp($v));
-//        $this->gender       = transform($data['gender'],    static fn ($v) => Gender::fromValue($v));
-//        $this->status       = CustomerStatus::from($data['status']);
-//    }
 }

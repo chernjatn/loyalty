@@ -2,19 +2,12 @@
 
 namespace App\Services\Sms;
 
-//use Anhskohbo\NoCaptcha\NoCaptcha;
 use Carbon\Carbon;
 use Illuminate\Redis\Connections\PhpRedisConnection;
 use App\Services\Common\RateLimiter;
+use mysql_xdevapi\Exception;
 use Tzsk\Sms\Sms as BaseSms;
 use Illuminate\Support\Facades\Redis;
-//use Ultra\Shop\Contracts\Notifications\SmsNotifiable;
-//use Ultra\Shop\Enums\WebNotificationType;
-//use Ultra\Shop\Exceptions\CaptchaRequiredException;
-//use Ultra\Shop\Exceptions\ThrottleException;
-//use Ultra\Shop\Services\Common\RateLimiter;
-//use Ultra\Shop\Services\Notifications\SmsNotification;
-
 
 class NotificationService
 {
@@ -58,7 +51,7 @@ class NotificationService
     {
         if ($this->verifyLimiter->tooManyAttempts()) {
             $this->connection->del($this->key);
-            throw new ThrottleException($this->verifyLimiter->availableIn());
+            throw new Exception($this->verifyLimiter->availableIn());
         }
 
         if ($this->connection->get($this->key) == $verificationKey) {
@@ -77,7 +70,7 @@ class NotificationService
      */
     public function gen(): Carbon
     {
-        if ($this->genLimiter->tooManyAttempts()) throw new ThrottleException($this->genLimiter->availableIn());
+        if ($this->genLimiter->tooManyAttempts()) throw new Exception($this->genLimiter->availableIn());
 
         $verificationCode = $this->genVerificationCode();
         $dateTo = Carbon::now()->addSeconds(self::KEY_EXP);

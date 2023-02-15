@@ -16,11 +16,4 @@ class Connection
             return new Ecom($config['url'], $config['login'], $config['password']);
         })();
     }
-
-//    private static function getChannelConfig(LoyaltyType $loyalType): array
-//    {
-//        $config = config('ecom.channels.' . $loyalType->key);
-//        if (empty($config)) throw new \Exception('No config for ' . $loyalType->key);
-//        return $config;
-//    }
 }
