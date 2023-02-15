@@ -41,8 +41,6 @@ class ContactByPhoneRequest extends JSONRequest
                 $resp['FamilyStatusCode'],
                 $resp['HasChildrenCode'],
                 $resp['EmailAddress'] ?: null,
-                (bool) $resp['MobilePhoneVerified'],
-                (bool) $resp['EmailVerified'],
                 (bool) $resp['AllowNotification'],
                 (bool) $resp['AllowEmail'],
                 (bool) $resp['AllowSms'],

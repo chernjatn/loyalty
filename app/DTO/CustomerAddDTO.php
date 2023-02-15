@@ -2,17 +2,15 @@
 
 namespace App\DTO;
 
+use App\Enums\FamilyStatus;
+use App\Enums\HasChildren;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 use App\Enums\ContactType;
 use App\Entity\Phone;
 use App\Enums\CustomerStatus;
 use App\Enums\Gender;
 use App\Contracts\BaseDTO;
-use App\Contracts\Validation\Rule\PhoneRule;
 
 class CustomerAddDTO implements BaseDTO
 {
@@ -20,67 +18,52 @@ class CustomerAddDTO implements BaseDTO
     protected Phone  $phone;
     protected string $firstName;
     protected string $lastName;
-    protected ?string $secondName    = null;
-    protected string $password;
-    protected bool $mailingAgree     = true;
-    protected bool $smsAgree         = true;
-    protected ?ContactType $prefConn = null;
-    protected ?Carbon $birthdate     = null;
-    protected ?Gender $gender        = null;
+    protected ?string $secondName     = null;
+    protected bool $allowNotification = true;
+    protected bool $allowEmail        = true;
+    protected bool $allowSms          = true;
+    protected bool $allowPhone        = true;
+    protected bool $allowPush         = true;
+    protected ?ContactType $prefConn  = null;
+    protected ?Carbon $birthDate      = null;
+    protected ?Gender $genderCode     = null;
     protected CustomerStatus $status;
+    protected ?FamilyStatus $familyStatusCode;
+    protected HasChildren $hasChildren;
 
     public function __construct(array $fields)
     {
-        $this->email             = $fields['email'] ?? null;
-        $this->phone             = new Phone($fields['phone']);
+        $this->emailAddress      = $fields['email'] ?? null;
+        $this->mobilePhone       = new Phone($fields['phone']);
         $this->firstName         = Str::title($fields['firstName']);
         $this->lastName          = Str::title($fields['lastName']);
         $this->secondName        = Str::title($fields['secondName'] ?? '');
-        $this->mailingAgree      = !empty($fields['mailingAgree']);
-        $this->smsAgree          = !empty($fields['smsAgree']);
-
-        if (isset($fields['status'])) {
-            $this->status = CustomerStatus::from((int) $fields['status']);
-        }
+        $this->allowNotification = !empty($fields['allowNotification']);
+        $this->allowEmail        = !empty($fields['allowEmail']);
+        $this->allowSms          = !empty($fields['allowSms']);
+        $this->allowPhone        = !empty($fields['allowPhone']);
+        $this->allowPush         = !empty($fields['allowPush']);
 
         if (isset($fields['birthdate'])) {
-            $this->birthdate = Carbon::parse($fields['birthdate']);
+            $this->birthDate = Carbon::parse($fields['birthdate']);
         }
 
-        if (isset($fields['prefConn'])) {
-            $this->prefConn = ContactType::fromValue($fields['prefConn']);
+        if (isset($fields['communicationMethod'])) {
+            $this->prefConn = ContactType::fromValue($fields['communicationMethod']);
         }
 
         if (isset($fields['gender'])) {
-            $this->gender = Gender::fromValue($fields['gender']);
+            $this->genderCode = Gender::fromValue($fields['gender']);
+        }
+
+        if (isset($fields['familyStatusCode'])) {
+            $this->familyStatusCode = !is_null($fields['familyStatusCode']) ? FamilyStatus::fromValue($fields['familyStatusCode']) : null;
+        }
+
+        if (isset($fields['hasChildren'])) {
+            $this->hasChildren = HasChildren::fromValue($fields['familyStatusCode']);
         }
     }
-
-//    protected function validate(array $fields)
-//    {
-//        $validator = Validator::make(
-//            $fields,
-//            $this->rules(),
-//            $this->messages()
-//        );
-//
-//        $validator->validate();
-//    }
-//
-//    protected function rules()
-//    {
-//        return [
-//            'firstName'   => ['required', 'bail', 'string', 'max:191'],
-//            'lastName'    => ['required', 'bail', 'string', 'max:191'],
-//            'secondName'  => ['nullable', 'bail', 'string', 'max:191'],
-//            'birthdate'   => ['required', 'bail', 'date',   'before:today'],
-//            'email'       => ['nullable', 'bail', 'email', 'max:191'],
-//            'phone'       => ['required', 'bail', new PhoneRule],
-//            'gender'      => ['required', 'bail', Rule::in(Gender::getValues())],
-//            'prefConn'    => ['required', 'bail', Rule::in(ContactType::getValues())],
-//            'status'      => ['nullable', 'bail', new Enum(CustomerStatus::class)],
-//        ];
-//    }
 //
 //    public function messages(): array
 //    {
@@ -101,20 +84,20 @@ class CustomerAddDTO implements BaseDTO
 //            'prefConn.required'    => __('customer.pref_conn_required'),
 //        ];
 //    }
-
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
+//
+//    public function getPassword(): string
+//    {
+//        return $this->password;
+//    }
 
     public function getGender(): ?Gender
     {
-        return $this->gender;
+        return $this->genderCode;
     }
 
     public function getBirthdate(): ?Carbon
     {
-        return $this->birthdate->format('d-m-y H:i:s');
+        return $this->birthDate;
     }
 
     public function getSecondName(): ?string
@@ -147,14 +130,24 @@ class CustomerAddDTO implements BaseDTO
         return $this->prefConn;
     }
 
-    public function getMailingAgree(): bool
+    public function getEmailAgree(): bool
     {
-        return $this->mailingAgree;
+        return $this->allowEmail;
     }
 
     public function getSmsAgree(): bool
     {
-        return $this->smsAgree;
+        return $this->allowSms;
+    }
+
+    public function getPhoneAgree(): bool
+    {
+        return $this->allowPhone;
+    }
+
+    public function getPushAgree(): bool
+    {
+        return $this->allowPush;
     }
 
     public function getStatus(): CustomerStatus
@@ -162,34 +155,34 @@ class CustomerAddDTO implements BaseDTO
         return $this->status;
     }
 
-    public function __serialize(): array
-    {
-        return [
-            'email'        => $this->email,
-            'phone'        => $this->phone,
-            'firstName'    => $this->firstName,
-            'lastName'     => $this->lastName,
-            'secondName'   => $this->secondName,
-            'mailingAgree' => $this->mailingAgree,
-            'smsAgree'     => $this->smsAgree,
-            'prefConn'     => $this->prefConn?->value,
-            'birthdate'    => $this->birthdate?->timestamp,
-            'gender'       => $this->gender?->value,
-            'status'       => $this->status->value,
-        ];
-    }
-
-    public function __unserialize(array $data): void
-    {
-        $this->email        = $data['email'];
-        $this->phone        = $data['phone'];
-        $this->firstName    = $data['firstName'];
-        $this->lastName     = $data['lastName'];
-        $this->secondName   = $data['secondName'];
-        $this->mailingAgree = $data['mailingAgree'];
-        $this->prefConn     = transform($data['prefConn'],  static fn ($v) => ContactType::fromValue($v));
-        $this->birthdate    = transform($data['birthdate'], static fn ($v) => Carbon::createFromTimestamp($v));
-        $this->gender       = transform($data['gender'],    static fn ($v) => Gender::fromValue($v));
-        $this->status       = CustomerStatus::from($data['status']);
-    }
+//    public function __serialize(): array
+//    {
+//        return [
+//            'email'        => $this->email,
+//            'phone'        => $this->phone,
+//            'firstName'    => $this->firstName,
+//            'lastName'     => $this->lastName,
+//            'secondName'   => $this->secondName,
+//            'mailingAgree' => $this->mailingAgree,
+//            'smsAgree'     => $this->smsAgree,
+//            'prefConn'     => $this->prefConn?->value,
+//            'birthdate'    => $this->birthdate?->timestamp,
+//            'gender'       => $this->gender?->value,
+//            'status'       => $this->status->value,
+//        ];
+//    }
+//
+//    public function __unserialize(array $data): void
+//    {
+//        $this->email        = $data['email'];
+//        $this->phone        = $data['phone'];
+//        $this->firstName    = $data['firstName'];
+//        $this->lastName     = $data['lastName'];
+//        $this->secondName   = $data['secondName'];
+//        $this->mailingAgree = $data['mailingAgree'];
+//        $this->prefConn     = transform($data['prefConn'],  static fn ($v) => ContactType::fromValue($v));
+//        $this->birthdate    = transform($data['birthdate'], static fn ($v) => Carbon::createFromTimestamp($v));
+//        $this->gender       = transform($data['gender'],    static fn ($v) => Gender::fromValue($v));
+//        $this->status       = CustomerStatus::from($data['status']);
+//    }
 }

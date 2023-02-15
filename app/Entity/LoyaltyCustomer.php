@@ -7,21 +7,19 @@ class LoyaltyCustomer
     function __construct(
         protected string $id,
         protected Phone $mobilePhone,
-        protected ?string $lastName = null,
-        protected ?string $firstName = null,
-        protected ?string $middleName = null,
-        protected ?int $genderCode = null,
-        protected ?string $birthDate = null,
-        protected ?int $familyStatusCode = null,
-        protected ?int $hasChildrenCode = null,
-        protected ?string $emailAddress = null,
-        protected ?bool $isPhoneVerified = null,
-        protected ?bool $isEmailVerified = null,
-        protected ?bool $allowNotification = null,
-        protected ?bool $allowEmail = null,
-        protected ?bool $allowSms = null,
-        protected ?bool $allowPhone = null,
-        protected ?bool $allowPush = null,
+        protected string $lastName,
+        protected string $firstName,
+        protected string $middleName,
+        protected int $genderCode,
+        protected ?string $birthDate,
+        protected ?int $familyStatusCode,
+        protected int $hasChildrenCode,
+        protected ?string $emailAddress,
+        protected ?bool $allowNotification,
+        protected ?bool $allowEmail,
+        protected ?bool $allowSms,
+        protected ?bool $allowPhone,
+        protected ?bool $allowPush,
     ) {
     }
 
@@ -40,14 +38,69 @@ class LoyaltyCustomer
         return $this->emailAddress;
     }
 
-    public function isPhoneVerified(): bool
+    public function getFamilyStatusCode(): ?int
     {
-        return $this->isPhoneVerified;
+        return $this->familyStatusCode;
     }
 
-    public function isEmailVerified(): bool
+    public function getHasChildrenCode(): int
     {
-        return $this->isEmailVerified;
+        return $this->hasChildrenCode;
+    }
+
+    public function getAllowNotification(): ?bool
+    {
+        return $this->allowNotification;
+    }
+
+    public function getAllowPhone(): ?bool
+    {
+        return $this->allowPhone;
+    }
+
+    public function getAllowSms(): ?bool
+    {
+        return $this->allowSms;
+    }
+
+    public function getAllowPush(): ?bool
+    {
+        return $this->allowPush;
+    }
+
+    public function getAllowEmail(): ?bool
+    {
+        return $this->allowEmail;
+    }
+
+    public function getBirthDate(): ?string
+    {
+        return $this->birthDate;
+    }
+
+    public function getGenderCode(): int
+    {
+        return $this->genderCode;
+    }
+
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function getMiddleName(): string
+    {
+        return $this->middleName;
+    }
+
+    public function getProperties(): array
+    {
+        return get_object_vars($this);
     }
 }
 

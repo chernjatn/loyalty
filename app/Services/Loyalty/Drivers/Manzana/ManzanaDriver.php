@@ -13,6 +13,7 @@ use App\Services\Loyalty\Drivers\Manzana\Requests\CardRequest;
 use App\Services\Loyalty\Drivers\Manzana\Requests\ContactByPhoneRequest;
 use App\Exceptions\Loyalty\LoyaltyException;
 use App\Services\Loyalty\Drivers\Manzana\Requests\ContactCreateRequest;
+use App\Services\Loyalty\Drivers\Manzana\Requests\ContactUpdateRequest;
 use App\Services\Loyalty\Drivers\Manzana\Requests\LoyCardCreateRequest;
 use App\Services\Loyalty\LoyaltyCache;
 
@@ -58,7 +59,19 @@ class ManzanaDriver implements LoyaltyDriver
 
     public function registerLoyCard(CustomerAddDTO $customerAddDTO): LoyCard
     {
-        $contact = $this->getContactByPhone($customerAddDTO->getPhone(), false) ?? (new ContactCreateRequest($this->loyaltyType, $customerAddDTO))->processRequest();
+        $contact = (static function () use ($customerAddDTO) {
+            $contact = $this->getContactByPhone($customerAddDTO->getPhone(), false);
+            if (!is_null($contact)) {
+                if ($customerAddDTO == new CustomerAddDTO($contact->getProperties())) {
+                    return $contact;
+                }
+
+                return (new ContactUpdateRequest($this->loyaltyType, $customerAddDTO))->processRequest();
+            }
+
+            return (new ContactCreateRequest($this->loyaltyType, $customerAddDTO))->processRequest();
+        })();
+
         if (is_null($contact)) throw new LoyaltyException(__('loyalty.cant_create_contact'));
 
         $card = (new LoyCardCreateRequest($this->loyaltyType, $contact))->processRequest();

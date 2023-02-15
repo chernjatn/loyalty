@@ -18,7 +18,6 @@ class ContactCreateRequest extends JSONRequest
         $this->customerAddDTO = $customerAddDTO;
     }
 
-
     /** @return ?Contact */
     public function processRequest()
     {
@@ -41,16 +40,18 @@ class ContactCreateRequest extends JSONRequest
 
         return [
             'MobilePhone'       => '+' . $this->customerAddDTO->getPhone()->getPhoneNumber(),
-            // 'EmailAddress'      => $this->customerAddDTO->getEmail(),
+            'EmailAddress'      => $this->customerAddDTO->getEmail(),
             'Firstname'         => $this->customerAddDTO->getFirstname(),
             'Lastname'          => $this->customerAddDTO->getLastname(),
             'MiddleName'        => $this->customerAddDTO->getSecondName() ?? '',
-            'Password'          => $this->customerAddDTO->getPassword(),
-            'BirthDate'         => '',
+            //'Password'          => $this->customerAddDTO->getPassword(),
+            'BirthDate'         => $this->customerAddDTO->getBirthdate()->format('d-m-y H:i:s'),
             'GenderCode'        => $gender,
-            'AllowNotification' => $this->customerAddDTO->getMailingAgree(),
-            'AllowEmail'        => $this->customerAddDTO->getMailingAgree(),
+            'AllowNotification' => $this->customerAddDTO->getEmailAgree(),
+            'AllowEmail'        => $this->customerAddDTO->getEmailAgree(),
             'AllowSms'          => $this->customerAddDTO->getSmsAgree(),
+            'AllowPhone'        => $this->customerAddDTO->getPhoneAgree(),
+            'AllowPush'         => $this->customerAddDTO->getPushAgree(),
             'AgreeToTerms'      => true,
             'appid'             => $this->appId
         ];
