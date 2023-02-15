@@ -3,7 +3,6 @@
 namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
 use App\Enums\LoyaltyType;
-use Webkul\Core\Models\Channel;
 use App\DTO\CustomerAddDTO;
 use App\Enums\Gender;
 use App\Entity\Contact;

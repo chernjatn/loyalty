@@ -31,8 +31,6 @@ class CustomerAddDTO implements BaseDTO
 
     public function __construct(array $fields)
     {
-        //$this->validate($fields);
-
         $this->email             = $fields['email'] ?? null;
         $this->phone             = new Phone($fields['phone']);
         $this->firstName         = Str::title($fields['firstName']);
@@ -40,8 +38,6 @@ class CustomerAddDTO implements BaseDTO
         $this->secondName        = Str::title($fields['secondName'] ?? '');
         $this->mailingAgree      = !empty($fields['mailingAgree']);
         $this->smsAgree          = !empty($fields['smsAgree']);
-        //$this->password          = $fields['password'];
-        //$this->status            = CustomerStatus::ACTIVE;
 
         if (isset($fields['status'])) {
             $this->status = CustomerStatus::from((int) $fields['status']);
@@ -118,7 +114,7 @@ class CustomerAddDTO implements BaseDTO
 
     public function getBirthdate(): ?Carbon
     {
-        return $this->birthdate;
+        return $this->birthdate->format('d-m-y H:i:s');
     }
 
     public function getSecondName(): ?string

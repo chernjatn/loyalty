@@ -2,33 +2,57 @@
 
 namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
-use Ultra\Shop\Services\Loyalty\Drivers\Manzana\VO\Contact;
+use App\Enums\LoyaltyType;
+use App\DTO\CustomerAddDTO;
+use App\Enums\Gender;
+use App\Entity\Contact;
 
-class ContactUpdateRequest extends SoapRequest
+class ContactUpdateRequest extends JSONRequest
 {
-    private Contact $contact;
+    private const REQUEST_APE_PATH  = '/Contact/Update';
+    private CustomerAddDTO $customerAddDTO;
 
-    public function __construct(Contact $contact)
+    public function __construct(LoyaltyType $loyaltyType, CustomerAddDTO $customerAddDTO)
     {
-        parent::__construct();
-        $this->contact = $contact;
+        parent::__construct($loyaltyType);
+        $this->customerAddDTO = $customerAddDTO;
     }
 
-    public function processRequest(): bool
+
+    /** @return ?Contact */
+    public function processRequest()
     {
-        $requestBody = [
-            'request' => [
-                'ContactID'           => $this->contact->getId(),
-                'MobilePhone'         => '+' . $this->contact->getPhone()->getPhoneNumber(),
-                'MobilePhoneVerified' => true,
-                'Organization'        => $this->organization,
-                'DateTime'            => date('c'),
-            ],
-            'orgName' => $this->orgName
+        return transform(
+            $this->post(
+                $this->managerDomain . self::REQUEST_APE_PATH,
+                $this->preparePostSuperQuery(['Entity' => $this->getContactFields()]),
+                'value'
+            ),
+            fn ($contactId) => new Contact($contactId, $this->customerAddDTO->getPhone())
+        );
+    }
+
+    protected function getContactFields()
+    {
+        $gender = 0;
+        if ($this->customerAddDTO->getGender()) {
+            $gender = $this->customerAddDTO->getGender()->is(Gender::M) ? 1 : 0;
+        }
+
+        return [
+            'MobilePhone'       => '+' . $this->customerAddDTO->getPhone()->getPhoneNumber(),
+            // 'EmailAddress'      => $this->customerAddDTO->getEmail(),
+            'Firstname'         => $this->customerAddDTO->getFirstname(),
+            'Lastname'          => $this->customerAddDTO->getLastname(),
+            'MiddleName'        => $this->customerAddDTO->getSecondName() ?? '',
+            'Password'          => $this->customerAddDTO->getPassword(),
+            'BirthDate'         => $this->customerAddDTO->getBirthdate(),
+            'GenderCode'        => $gender,
+            'AllowNotification' => $this->customerAddDTO->getMailingAgree(),
+            'AllowEmail'        => $this->customerAddDTO->getMailingAgree(),
+            'AllowSms'          => $this->customerAddDTO->getSmsAgree(),
+            'AgreeToTerms'      => true,
+            'appid'             => $this->appId
         ];
-
-        $response = $this->soapClient->ContactUpdate($requestBody);
-
-        return empty($response->ContactUpdateResult->ErrorCode);
     }
 }

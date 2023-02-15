@@ -30,12 +30,24 @@ class ContactByPhoneRequest extends JSONRequest
                 'value.0'
             ),
 
-            fn (array $resp) => new Contact(
+            fn (array $resp) => new LoyaltyCustomer(
                 $resp['Id'],
                 $this->phone,
+                $resp['LastName'],
+                $resp['FirstName'],
+                $resp['MiddleName'],
+                $resp['GenderCode'],
+                $resp['BirthDate'],
+                $resp['FamilyStatusCode'],
+                $resp['HasChildrenCode'],
                 $resp['EmailAddress'] ?: null,
                 (bool) $resp['MobilePhoneVerified'],
                 (bool) $resp['EmailVerified'],
+                (bool) $resp['AllowNotification'],
+                (bool) $resp['AllowEmail'],
+                (bool) $resp['AllowSms'],
+                (bool) $resp['AllowPhone'],
+                (bool) $resp['AllowPush'],
             )
         );
     }

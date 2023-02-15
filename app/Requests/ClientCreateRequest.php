@@ -9,6 +9,7 @@ use App\Enums\FamilyStatus;
 use App\Enums\ContactType;
 use App\Enums\LoyaltyType;
 use App\Enums\HasChildren;
+use Illuminate\Validation\Rule;
 use App\Contracts\GetterDTO;
 use App\DTO\CustomerAddDTO;
 use Illuminate\Validation\Rules\Enum;
@@ -21,14 +22,19 @@ class ClientCreateRequest extends SmsVerificationRequest implements GetterDTO
                 'lastName' => ['required', 'string'],
                 'firstName' => ['required', 'string'],
                 'middleName' => ['required', 'string'],
-                //'gender' => ['required', new Enum(Gender::class)],
+                'genderCode' => ['required', Rule::in(Gender::getValues())],
                 'emailAddress' => ['string'],
-                'birthDate' => ['date'],
+                'birthDate' => ['date', 'before:today'],
                 'familyStatusCode' => [new Enum(FamilyStatus::class)],
                 'hasChildrenCode' => [new Enum(HasChildren::class)],
                 'orgUnitId' => [new Enum(LoyaltyType::class)],
-                'prefConn' => [new Enum(ContactType::class)],
-                'status' => [new Enum(CustomerStatus::class)]
+                'communicationMethod' => [Rule::in(ContactType::getValues())],
+                'status' => [new Enum(CustomerStatus::class)],
+                'allowNotification' => ['bool'],
+                'allowEmail' => ['bool'],
+                'allowSms' => ['bool'],
+                'allowPhone' => ['bool'],
+                'allowPush' => ['bool']
             ];
     }
 
@@ -48,6 +54,6 @@ class ClientCreateRequest extends SmsVerificationRequest implements GetterDTO
 
     public function getDTO(): BaseDTO
     {
-        return new CustomerAddDTO($this->all());
+        return new CustomerAddDTO($this->val);
     }
 }

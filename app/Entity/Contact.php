@@ -6,16 +6,11 @@ class Contact extends LoyaltyCustomer
 {
     public function __construct(
         protected string $id,
-        Phone $phone,
-        ?string $email,
-        bool $isPhoneVerified,
-        bool $isEmailVerified,
+        protected Phone $mobilePhone,
     ) {
         parent::__construct(
-            $phone,
-            $email,
-            $isPhoneVerified,
-            $isEmailVerified,
+            $id,
+            $mobilePhone,
         );
     }
 
