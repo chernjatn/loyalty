@@ -10,6 +10,6 @@ use App\DTO\CustomerAddDTO;
 interface LoyaltyDriver
 {
     public function getLoyCardByPhone(Phone $phone): ?Collection;
-    public function getLoyaltyCustomerByPhone($phone, bool $useCache = true): ?LoyaltyCustomer;
+    public function getLoyaltyCustomerByPhone(Phone $phone, bool $useCache = true): ?LoyaltyCustomer;
     public function registerLoyCard(CustomerAddDTO $customerAddDTO): LoyCard;
 }

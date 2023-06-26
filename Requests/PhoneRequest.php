@@ -3,8 +3,6 @@
 namespace App\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-//use Ultra\Shop\Services\Validation\PhoneRule;
-//use Ultra\Shop\VO\Phone;
 
 class PhoneRequest extends FormRequest
 {

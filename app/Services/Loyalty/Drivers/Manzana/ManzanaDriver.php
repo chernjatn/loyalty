@@ -19,6 +19,8 @@ use App\Services\Loyalty\LoyaltyCache;
 
 class ManzanaDriver implements LoyaltyDriver
 {
+    const BLOCK_TTL = 60;
+
     private LoyaltyType $loyaltyType;
 
     public function __construct()
@@ -28,13 +30,12 @@ class ManzanaDriver implements LoyaltyDriver
 
     public function existsCard(Phone $phone): bool
     {
-        dd($this->getContactByPhone($phone, false));
         return (bool) $this->getLoyCardByPhone($phone, true);
     }
 
     public function getLoyCardByPhone(Phone $phone, bool $useCache = true): ?Collection
     {
-        $closure = fn () => transform($this->getLoyaltyCustomerByPhone($phone, $useCache), fn (LoyaltyCustomer $contact) => (new CardRequest($this->loyaltyType, $contact))->processRequest());
+        $closure = static fn () => transform($this->getLoyaltyCustomerByPhone($phone, $useCache), fn (LoyaltyCustomer $contact) => (new CardRequest($this->loyaltyType, $contact))->processRequest());
 
         if (!$useCache) {
             LoyaltyCache::flushCurrentCustomerCache();
@@ -46,7 +47,7 @@ class ManzanaDriver implements LoyaltyDriver
 
     public function getLoyaltyCustomerByPhone(Phone $phone, bool $useCache = true): ?LoyaltyCustomer
     {
-        $closure = fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
+        $closure = static fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
         $key = 'getloyaltycustomerbyphone:' . $phone->getPhoneNumber();
 
         if (!$useCache) {
@@ -84,7 +85,7 @@ class ManzanaDriver implements LoyaltyDriver
 
     private function getContactByPhone(Phone $phone, bool $useCache = true)
     {
-        $closure = fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
+        $closure = static fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
 
         if (!$useCache) {
             LoyaltyCache::deleteCurrentChannelCache($phone->getPhoneNumber());
