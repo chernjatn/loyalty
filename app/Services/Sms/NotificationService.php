@@ -5,7 +5,6 @@ namespace App\Services\Sms;
 use App\Services\Cache\Throttles;
 use Carbon\Carbon;
 use Illuminate\Redis\Connections\PhpRedisConnection;
-use App\Services\Common\RateLimiter;
 use Tzsk\Sms\Sms as BaseSms;
 use Illuminate\Support\Facades\Redis;
 
@@ -13,36 +12,19 @@ class NotificationService
 {
     use Throttles;
 
-    protected const DB                       = 'data';
-    protected const KEY_EXP                  = 600;
-
-    protected const GET_DECAY_SECONDS        = 60;
-
+    protected const DB                = 'data';
+    protected const KEY_EXP           = 600;
+    protected const GET_DECAY_SECONDS = 60;
 
     protected PhpRedisConnection $connection;
     protected BaseSms $smsManager;
 
     public function __construct(
         protected SmsNotifiable $smsNotifiable,
-        protected ?string $preamble = null,
     ) {
         $this->smsManager       = new smsManager();
         $this->key              = $this->keyGenerate($this->smsNotifiable);
         $this->connection       = Redis::connection(self::DB);
-    }
-
-    /**
-     * проверяет код из смс
-     * !проблема с запоздалыми смс из за KEY_EXP
-     */
-    public function verify(string $verificationKey): bool
-    {
-        if ($this->connection->get($this->key) == $verificationKey) {
-            $this->connection->del($this->key);
-            return true;
-        }
-
-        return false;
     }
 
     /**

@@ -46,7 +46,7 @@ class LoyaltyController extends Controller
      */
     public function card(SmsVerificationRequest $request)
     {
-        $cardClient = $this->loyaltyManager->getLoyCardsByPhone($request->getPhone())->getNumber();
+        $cardClient = $this->loyaltyManager->getLoyCardByPhone($request->getPhone())->getNumber();
 
         return getResponse()->success()
             ->setData([

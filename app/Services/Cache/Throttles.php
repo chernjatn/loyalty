@@ -27,6 +27,4 @@ trait Throttles
     {
         return 900;
     }
-
-    abstract private static function getThrottlePrefix(): string;
 }
