@@ -35,7 +35,7 @@ class ManzanaDriver implements LoyaltyDriver
 
     public function getLoyCardByPhone(Phone $phone, bool $useCache = true): ?Collection
     {
-        $closure = static fn () => transform($this->getLoyaltyCustomerByPhone($phone, $useCache), fn (LoyaltyCustomer $contact) => (new CardRequest($this->loyaltyType, $contact))->processRequest());
+        $closure = fn () => transform($this->getLoyaltyCustomerByPhone($phone, $useCache), fn (LoyaltyCustomer $contact) => (new CardRequest($this->loyaltyType, $contact))->processRequest());
 
         if (!$useCache) {
             LoyaltyCache::flushCurrentCustomerCache();
@@ -47,7 +47,7 @@ class ManzanaDriver implements LoyaltyDriver
 
     public function getLoyaltyCustomerByPhone(Phone $phone, bool $useCache = true): ?LoyaltyCustomer
     {
-        $closure = static fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
+        $closure = fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
         $key = 'getloyaltycustomerbyphone:' . $phone->getPhoneNumber();
 
         if (!$useCache) {
@@ -60,7 +60,7 @@ class ManzanaDriver implements LoyaltyDriver
 
     public function registerLoyCard(CustomerAddDTO $customerAddDTO): LoyCard
     {
-        $contact = (static function () use ($customerAddDTO) {
+        $contact = (function () use ($customerAddDTO) {
             $contact = $this->getContactByPhone($customerAddDTO->getPhone(), false);
             if (!is_null($contact)) {
                 if ($customerAddDTO == new CustomerAddDTO($contact->getProperties())) {
@@ -85,7 +85,7 @@ class ManzanaDriver implements LoyaltyDriver
 
     private function getContactByPhone(Phone $phone, bool $useCache = true)
     {
-        $closure = static fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
+        $closure = fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
 
         if (!$useCache) {
             LoyaltyCache::deleteCurrentChannelCache($phone->getPhoneNumber());
