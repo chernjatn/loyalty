@@ -14,7 +14,7 @@ class AddSentCodeField
     {
         if ($request->filled('phone')) {
             $key = NotificationService::keyGenerate(new SmsNotifiable(session()->getId(), $request->get('phone')));
-            $code = Redis::connection(env('REDIS_NAME', 'app_redis'))->get($key);
+            $code = Redis::connection(env('REDIS_NAME', 'redis'))->get($key);
 
             if (!is_null($code)) {
                 $request = $request->merge(['sentCode' => $code]);

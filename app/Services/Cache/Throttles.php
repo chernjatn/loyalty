@@ -12,7 +12,7 @@ trait Throttles
 {
     private static function throttle(string $method, string $key, Closure $closure, string $onExistsMessage, ?int $blockTtl = null): void
     {
-        $methodKey = self::getThrottlePrefix() . ':' . $method . ':' . md5($key);
+        $methodKey = $method . ':' . $key;
         $timeKey   = $methodKey . ':time';
         $ttl       = $blockTtl ?? self::getThrottleDefaultTtl();
 

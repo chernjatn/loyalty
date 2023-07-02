@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Enums\LoyaltyType;
 use App\Response\ApiResponse;
-use App\Services\Loyalty\LoyaltyManager;
 use App\Response\Response;
 use Illuminate\Support\ServiceProvider;
 

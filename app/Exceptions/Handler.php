@@ -2,8 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Response\ApiResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Exceptions\Loyalty\BadRequestException;
+use Ultra\Shop\Contracts\Common\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -38,6 +41,14 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof BadRequestException) {
+
+            return (new ApiResponse())
+                ->fail()
+                ->setStatusCode($exception->getCode())
+                ->setData($exception->getMessage());
+        }
+
         return parent::render($request, $exception);
     }
 

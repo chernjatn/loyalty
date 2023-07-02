@@ -4,7 +4,6 @@ namespace App\Services\Sms;
 
 use App\Services\Cache\Throttles;
 use Carbon\Carbon;
-use Illuminate\Redis\Connections\PhpRedisConnection;
 use Tzsk\Sms\Sms as BaseSms;
 use Illuminate\Support\Facades\Redis;
 
@@ -16,15 +15,14 @@ class NotificationService
     protected const KEY_EXP           = 600;
     protected const GET_DECAY_SECONDS = 60;
 
-    protected PhpRedisConnection $connection;
     protected BaseSms $smsManager;
 
     public function __construct(
         protected SmsNotifiable $smsNotifiable,
     ) {
-        $this->smsManager       = new smsManager();
+        $this->smsManager       = new SmsManager();
         $this->key              = $this->keyGenerate($this->smsNotifiable);
-        $this->connection       = Redis::connection(self::DB);
+        $this->connection       = Redis::connection();
     }
 
     /**
@@ -37,7 +35,7 @@ class NotificationService
 
         $clientPhone = $this->smsNotifiable->getPhoneAttribute()->getPhoneNumber();
 
-        $this->throttle('sendCode', $this->key, static fn () => $this->smsManager->to($clientPhone)
+        $this->throttle('sendCode', $this->key, fn () => $this->smsManager->to($clientPhone)
             ->send('code:' . $verificationCode), 'feedback.already_sms_sended', self::GET_DECAY_SECONDS);
 
         $this->connection->set($this->key, $verificationCode, 'EX', self::KEY_EXP);
@@ -52,6 +50,6 @@ class NotificationService
 
     static function keyGenerate(SmsNotifiable $smsNotifiable): string
     {
-        return 'sms:verify:' . $smsNotifiable->getId() . $smsNotifiable->getPhoneAttribute();
+        return 'sms:verify:' . $smsNotifiable->getPhoneAttribute();
     }
 }

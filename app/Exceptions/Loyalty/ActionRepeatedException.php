@@ -4,7 +4,7 @@ namespace App\Exceptions\Loyalty;
 
 use Carbon\Carbon;
 
-class ActionRepeatedException extends \Exception
+class ActionRepeatedException extends BadRequestException
 {
     public function __construct(string $messageId, Carbon $lastActionTime)
     {
