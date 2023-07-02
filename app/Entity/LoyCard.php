@@ -23,14 +23,14 @@ class LoyCard
 //        return $this->type;
 //    }
 
-    public function getBalance(): int
+    public function getBalance(): ?int
     {
         return $this->balance;
     }
 
-    public function is(LoyCard $loyCard): bool
-    {
-        return $loyCard->getType()->is($this->type) && $loyCard->getNumber() === $this->getNumber();
-    }
+//    public function is(LoyCard $loyCard): bool
+//    {
+//        return $loyCard->getType()->is($this->type) && $loyCard->getNumber() === $this->getNumber();
+//    }
 }
 

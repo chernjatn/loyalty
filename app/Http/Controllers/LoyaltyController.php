@@ -46,7 +46,7 @@ class LoyaltyController extends Controller
      */
     public function card(SmsVerificationRequest $request)
     {
-        $cardClient = $this->loyaltyManager->getLoyCardByPhone($request->getPhone())->getNumber();
+        $cardClient = $this->loyaltyManager->getLoyCardByPhone($request->getPhone())->first()->getNumber();
 
         return getResponse()->success()
             ->setData([
@@ -61,7 +61,7 @@ class LoyaltyController extends Controller
      */
     public function balance(CardRequest $request)
     {
-        $activeBalance = $this->loyaltyManager->getLoyCardsByPhone($request->getPhone())->getBalance();
+        $activeBalance = $this->loyaltyManager->getLoyCardByPhone($request->getPhone())->first()->getBalance();
 
         return getResponse()->success()
             ->setData([

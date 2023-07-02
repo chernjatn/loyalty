@@ -32,8 +32,8 @@ class PhoneRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation()
-    {
-        $this->merge(['phone' => $this->route('clientTel')]);
-    }
+//    protected function prepareForValidation()
+//    {
+//        $this->merge(['phone' => $this->route('clientTel')]);
+//    }
 }

@@ -2,11 +2,14 @@
 
 namespace App\Exceptions;
 
-use App\Response\ApiResponse;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
+use App\Response\ApiResponse;
 use App\Exceptions\Loyalty\BadRequestException;
-use Ultra\Shop\Contracts\Common\Response;
+use App\Exceptions\Loyalty\CustomValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -41,12 +44,27 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ValidationException) {
+            $exception = CustomValidationException::fromValidationException($exception);
+        }
+
+        if ($this->isHttpException($exception)) {
+            $code = $exception->getStatusCode();
+        } else {
+            $code = $exception->getCode() > 100 && $exception->getCode() < 511
+                ? $exception->getCode()
+                : HttpResponse::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        $data = ['message' => $exception->getMessage()];
+
         if ($exception instanceof BadRequestException) {
+            $data += $exception->getData();
 
             return (new ApiResponse())
                 ->fail()
-                ->setStatusCode($exception->getCode())
-                ->setData($exception->getMessage());
+                ->setStatusCode($code)
+                ->setData($data);
         }
 
         return parent::render($request, $exception);

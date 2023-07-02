@@ -21,12 +21,12 @@ class NotificationService
         protected SmsNotifiable $smsNotifiable,
     ) {
         $this->smsManager       = new SmsManager();
-        $this->key              = $this->keyGenerate($this->smsNotifiable);
+        $this->key              = $this->keyGenerate($this->smsNotifiable->getPhoneAttribute());
         $this->connection       = Redis::connection();
     }
 
     /**
-     * sent sms
+     * send sms
      * @return Carbon - expiration time
      */
     public function sendCode(): Carbon
@@ -45,11 +45,11 @@ class NotificationService
 
     protected function genVerificationCode(): string
     {
-        return (string) mt_rand(1111, 9999);
+        return 5555;
     }
 
-    static function keyGenerate(SmsNotifiable $smsNotifiable): string
+    static function keyGenerate(string $key): string
     {
-        return 'sms:verify:' . $smsNotifiable->getPhoneAttribute();
+        return 'sms:verify:' . $key;
     }
 }

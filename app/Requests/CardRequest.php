@@ -7,7 +7,7 @@ class CardRequest extends SmsVerificationRequest
     public function rules()
     {
         return parent::rules() + [
-                'card' => ['required', 'card'],
+                'card' => ['required'],
             ];
     }
 
@@ -18,7 +18,7 @@ class CardRequest extends SmsVerificationRequest
 
     protected function prepareForValidation()
     {
-        $this->merge(['card' => $this->route('card')]);
+        $this->merge(['card' => $this->route('cardId')]);
     }
 
     public function messages()
