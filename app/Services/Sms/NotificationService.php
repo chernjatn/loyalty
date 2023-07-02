@@ -28,10 +28,10 @@ class NotificationService
     }
 
     /**
-     * Отправялет смс
+     * sent sms
      * @return Carbon - expiration time
      */
-    public function sentCode(): Carbon
+    public function sendCode(): Carbon
     {
         $verificationCode = $this->genVerificationCode();
 

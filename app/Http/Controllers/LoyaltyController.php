@@ -36,7 +36,7 @@ class LoyaltyController extends Controller
         return getResponse()->success()
             ->setData([
                 'status' => true,
-                'expiration time' => $smsVerification->sentCode()
+                'expiration time' => $smsVerification->sendCode()
             ]);
     }
 

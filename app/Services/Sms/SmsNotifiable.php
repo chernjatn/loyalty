@@ -4,9 +4,8 @@ namespace App\Services\Sms;
 
 use Illuminate\Notifications\RoutesNotifications;
 use App\Entity\Phone;
-use Ultra\Shop\Contracts\Notifications\SmsNotifiable as SmsNotifiableContract;
 
-class SmsNotifiable implements SmsNotifiableContract
+class SmsNotifiable
 {
     use RoutesNotifications;
 
