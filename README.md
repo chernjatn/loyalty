@@ -39,7 +39,7 @@
        ```
 
 ## Документация API
-[Confluence: Сервис акций (promos)](https://kb.erkapharm.com/confluence/pages/viewpage.action?pageId=106988141)
+[Confluence: Сервис лояльности (loyalty)](https://kb.erkapharm.com/confluence/pages/viewpage.action?pageId=119835044)
 
 ## Линтеры
 
