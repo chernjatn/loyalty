@@ -2,8 +2,6 @@
 
 namespace App\Requests;
 
-use App\Requests\PhoneRequest;
-
 class CreateCardRequest extends PhoneRequest
 {
     public function authorize()

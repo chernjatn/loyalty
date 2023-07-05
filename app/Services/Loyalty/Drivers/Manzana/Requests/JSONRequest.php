@@ -6,7 +6,6 @@ use App\Enums\LoyaltyType;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Webkul\Core\Models\Channel;
 
 abstract class JSONRequest
 {
@@ -27,7 +26,7 @@ abstract class JSONRequest
 
     public function __construct(LoyaltyType $loyaltyType)
     {
-        $config = config('manzana.loyaltyType.' . $loyaltyType->key, fn () => config('manzana.default'));
+        $config = config('manzana.loyaltyType.' . $loyaltyType->name, fn () => config('manzana.default'));
 
         $this->config         = $config;
         $this->appId          = $config['app_id'];

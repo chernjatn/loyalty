@@ -49,19 +49,19 @@ class CustomerAddDTO implements BaseDTO
         }
 
         if (isset($fields['communicationMethod'])) {
-            $this->prefConn = ContactType::fromValue($fields['communicationMethod']);
+            $this->prefConn = ContactType::from($fields['communicationMethod']);
         }
 
         if (isset($fields['gender'])) {
-            $this->genderCode = Gender::fromValue($fields['gender']);
+            $this->genderCode = Gender::from($fields['gender']);
         }
 
         if (isset($fields['familyStatusCode'])) {
-            $this->familyStatusCode = !is_null($fields['familyStatusCode']) ? FamilyStatus::fromValue($fields['familyStatusCode']) : null;
+            $this->familyStatusCode = !is_null($fields['familyStatusCode']) ? FamilyStatus::from($fields['familyStatusCode']) : null;
         }
 
         if (isset($fields['hasChildren'])) {
-            $this->hasChildren = HasChildren::fromValue($fields['familyStatusCode']);
+            $this->hasChildren = HasChildren::from($fields['familyStatusCode']);
         }
     }
 //

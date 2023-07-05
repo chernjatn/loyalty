@@ -6,18 +6,25 @@ use App\Requests\PhoneRequest;
 use App\Requests\ClientCreateRequest;
 use App\Requests\SmsVerificationRequest;
 use App\Requests\CardRequest;
+use App\Services\Loyalty\LoyaltyManager;
 use App\Services\Sms\NotificationService;
 use App\Services\Sms\SmsNotifiable;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller;
 
 class LoyaltyController extends Controller
 {
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
     /**
      * check if there is a card
      * @param PhoneRequest $request
      */
     public function checkIsCard(PhoneRequest $request)
     {
-        $existsCard = $this->loyaltyManager->existsCard($request->getPhone());
+        $existsCard = $this->getLoyaltyManager()->existsCard($request->getPhone());
 
         return getResponse()->success()
             ->setData([
@@ -47,7 +54,7 @@ class LoyaltyController extends Controller
      */
     public function card(SmsVerificationRequest $request)
     {
-        $cardClient = $this->loyaltyManager->getLoyCardByPhone($request->getPhone())->first()->getNumber();
+        $cardClient = $this->getLoyaltyManager()->getLoyCardByPhone($request->getPhone())->first()->getNumber();
 
         return getResponse()->success()
             ->setData([
@@ -62,7 +69,7 @@ class LoyaltyController extends Controller
      */
     public function balance(CardRequest $request)
     {
-        $activeBalance = $this->loyaltyManager->getLoyCardByPhone($request->getPhone())->first()->getBalance();
+        $activeBalance = $this->getLoyaltyManager()->getLoyCardByPhone($request->getPhone())->first()->getBalance();
 
         return getResponse()->success()
             ->setData([
@@ -77,12 +84,17 @@ class LoyaltyController extends Controller
      */
     public function create(ClientCreateRequest $request)
     {
-        $cardClient = $this->loyaltyManager->registerLoyCard($request->getDTO())->getNumber();
+        $cardClient = $this->getLoyaltyManager()->registerLoyCard($request->getDTO())->getNumber();
 
         return getResponse()->success()
             ->setData([
                 'status' => true,
                 'card' => $cardClient
             ]);
+    }
+
+    public function getLoyaltyManager()
+    {
+        return new LoyaltyManager(app());
     }
 }

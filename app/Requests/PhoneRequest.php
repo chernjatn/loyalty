@@ -31,9 +31,4 @@ class PhoneRequest extends FormRequest
             'phone.regex' => 'Введите телефонный номер в формате 79999999999',
         ];
     }
-
-//    protected function prepareForValidation()
-//    {
-//        $this->merge(['phone' => $this->route('clientTel')]);
-//    }
 }
