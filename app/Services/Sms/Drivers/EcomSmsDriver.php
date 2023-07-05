@@ -27,6 +27,7 @@ class EcomSmsDriver extends BaseDriver
             }
 
             $template = loyaltyType()->template();
+
             $response->put($recipient, $this->client->post("/ecom/hs/sms/templates/$template", $this->payload($recipient)));
         }
 
@@ -39,9 +40,9 @@ class EcomSmsDriver extends BaseDriver
             'clientTel' => '+' . $recipient,
             'params' => [
                 'code' => $this->body,
-                'serviceId' => loyaltyType()->value
             ],
             'sendNow'   => true,
+            "serviceId" => loyaltyType()->projectLogin()
         ];
     }
 }

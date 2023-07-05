@@ -20,4 +20,15 @@ enum LoyaltyType: int
             self::superapteka => 33,
         };
     }
+
+    public function projectLogin(): string
+    {
+        return match($this)
+        {
+            self::ozerki      => "SiteOz",
+            self::stoletov    => "SuperApteka",
+            self::samson      => "Samson-farma",
+            self::superapteka => "Stoletov",
+        };
+    }
 }
