@@ -38,7 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('loyaltyType', function ($value) {
-            return LoyaltyType::fromValue($value);
+            return LoyaltyType::from($value);
         });
     }
 

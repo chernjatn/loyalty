@@ -2,12 +2,22 @@
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
 
-class LoyaltyType extends Enum
+enum LoyaltyType: int
 {
-    const ozerki       = '1';
-    const stoletov     = '2';
-    const superapteka  = '3';
-    const samson       = '4';
+    case ozerki      = 1;
+    case stoletov    = 2;
+    case superapteka = 3;
+    case samson      = 4;
+
+    public function template(): int
+    {
+        return match($this)
+        {
+            self::ozerki      => 36,
+            self::stoletov    => 34,
+            self::samson      => 35,
+            self::superapteka => 33,
+        };
+    }
 }

@@ -2,13 +2,12 @@
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
 
-class ContactType extends Enum
+enum ContactType: int
 {
-    const ANY              = 1;
-    const EMAIL            = 2;
-    const PHONE            = 3;
-    const POST             = 4;
-    const EMAIL_AND_PHONE  = 5;
+    case ANY              = 1;
+    case EMAIL            = 2;
+    case PHONE            = 3;
+    case POST             = 4;
+    case EMAIL_AND_PHONE  = 5;
 }

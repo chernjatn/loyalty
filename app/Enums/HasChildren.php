@@ -2,11 +2,9 @@
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
-
-class HasChildren extends Enum
+enum HasChildren: int
 {
-    const DEFAULT          = 1;
-    const HAS_CHILDREN     = 2;
-    const HAS_NO_CHILDREN  = 3;
+    case DEFAULT          = 1;
+    case HAS_CHILDREN     = 2;
+    case HAS_NO_CHILDREN  = 3;
 }

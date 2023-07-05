@@ -12,7 +12,7 @@ class EcomSmsDriver extends BaseDriver
 
     public function __construct()
     {
-        $this->client = Connection::getConnection(loyaltyType());
+        $this->client = Connection::getConnection();
 
         parent::__construct();
     }
@@ -25,7 +25,9 @@ class EcomSmsDriver extends BaseDriver
                 $this->logger->info('SMS', $this->payload($recipient));
                 continue;
             }
-            $response->put($recipient, $this->client->post('/ecom/hs/sms/send/', $this->payload($recipient)));
+
+            $template = loyaltyType()->template();
+            $response->put($recipient, $this->client->post("/ecom/hs/sms/templates/$template", $this->payload($recipient)));
         }
 
         return (count($this->recipients) == 1) ? $response->first() : $response;
@@ -35,8 +37,11 @@ class EcomSmsDriver extends BaseDriver
     {
         return [
             'clientTel' => '+' . $recipient,
-            'message'   => $this->body,
-            'sendNow'   => true
+            'params' => [
+                'code' => $this->body,
+                'serviceId' => loyaltyType()->value
+            ],
+            'sendNow'   => true,
         ];
     }
 }

@@ -13,7 +13,7 @@ return [
         'timeout' => env('ECOM_FTP_TIMEOUT', '10'),
     ],
 
-    'url' => env('ECOM_CHANNEL_SUPERAPTEKA_URL', ''),
-    'login' => env('ECOM_CHANNEL_SUPERAPTEKA_LOGIN', ''),
-    'password' => env('ECOM_CHANNEL_SUPERAPTEKA_PASSWORD', '')
+    'url' => env('ECOM_URL', ''),
+    'login' => env('ECOM_LOGIN', ''),
+    'password' => env('ECOM_PASSWORD', '')
 ];

@@ -3,38 +3,31 @@
 namespace App\Enums;
 
 use LogicException;
-use BenSampo\Enum\Contracts\LocalizedEnum;
-use BenSampo\Enum\Enum;
 use Illuminate\Support\Facades\Storage;
 
-class LoyCardType extends Enum implements LocalizedEnum
+enum LoyCardType: string
 {
-    const SUPERAPTEKA   = 'superapteka';
-    const SUPERSAMSON   = 'supersamson';
-    const ZOZ           = 'zoz';
-    const VASHE_PR_RESH = 'vpr';
-    const PULS_ZDOROVYA = 'pz';
-    const YA_BUDU_JIT   = 'ya_budu_jit';
-    const KARTA_ZDORV   = 'kz';
-    const APTEKA_RU     = 'apteka_ru';
+    case SUPERAPTEKA   = 'superapteka';
+    case SUPERSAMSON   = 'supersamson';
+    case ZOZ           = 'zoz';
+    case VASHE_PR_RESH = 'vpr';
+    case PULS_ZDOROVYA = 'pz';
+    case YA_BUDU_JIT   = 'ya_budu_jit';
+    case KARTA_ZDORV   = 'kz';
+    case APTEKA_RU     = 'apteka_ru';
 
     public static function fromChannel(LoyaltyType $loyaltyType): self
     {
         switch ($loyaltyType->value) {
             case LoyaltyType::ozerki:
-                return self::fromValue(self::ZOZ);
+                return LoyCardType::ZOZ;
             case LoyaltyType::samson:
-                return self::fromValue(self::SUPERSAMSON);
+                return LoyCardType::SUPERSAMSON;
             case LoyaltyType::stoletov:
-                return self::fromValue(self::YA_BUDU_JIT);
+                return LoyCardType::YA_BUDU_JIT;
             case LoyaltyType::superapteka:
-                return self::fromValue(self::SUPERAPTEKA);
+                return LoyCardType::SUPERAPTEKA;
         }
         throw new LogicException('No loyCardType for channel:' . $loyaltyType->value);
-    }
-
-    public function getImagePath(): string
-    {
-        return Storage::url('loycard/' . $this->value . '.svg');
     }
 }

@@ -2,12 +2,10 @@
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
-
-class Gender extends Enum
+enum Gender: string
 {
-    const M = 'm';
-    const F = 'f';
+    case M = 'm';
+    case F = 'f';
 
     public static function getDescription($value): string
     {

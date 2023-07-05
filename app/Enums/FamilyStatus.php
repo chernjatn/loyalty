@@ -2,12 +2,10 @@
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
-
-class FamilyStatus extends Enum
+enum FamilyStatus: int
 {
-    const NOT_MERRIED = 1;
-    const MERRIED     = 2;
-    const DIVORCED    = 3;
-    const WIDOWER     = 4;
+    case NOT_MERRIED = 1;
+    case MERRIED     = 2;
+    case DIVORCED    = 3;
+    case WIDOWER     = 4;
 }

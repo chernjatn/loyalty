@@ -36,7 +36,7 @@ class NotificationService
         $clientPhone = $this->smsNotifiable->getPhoneAttribute()->getPhoneNumber();
 
         $this->throttle('sendCode', $this->key, fn () => $this->smsManager->to($clientPhone)
-            ->send('code:' . $verificationCode), 'feedback.already_sms_sended', self::GET_DECAY_SECONDS);
+            ->send($verificationCode), 'feedback.already_sms_sended', self::GET_DECAY_SECONDS);
 
         $this->connection->set($this->key, $verificationCode, 'EX', self::KEY_EXP);
 
@@ -45,7 +45,7 @@ class NotificationService
 
     protected function genVerificationCode(): string
     {
-        return 5555;
+        return (string) mt_rand(1111, 9999);
     }
 
     static function keyGenerate(string $key): string

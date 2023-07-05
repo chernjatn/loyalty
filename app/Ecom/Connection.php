@@ -2,18 +2,14 @@
 
 namespace App\Ecom;
 
-use App\Enums\LoyaltyType;
-use App\Ecom\Ecom;
-
 class Connection
 {
-    private static array $connection = [];
+    private static $connection = null;
 
-    public static function getConnection(LoyaltyType $loyalType): Ecom
+    public static function getConnection(): Ecom
     {
-        return self::$connection[$loyalType->value] ??= (function () use ($loyalType) {
-            $config = config('ecom');
-            return new Ecom($config['url'], $config['login'], $config['password']);
-        })();
+        $config = config('ecom');
+
+        return self::$connection ??= new Ecom($config['url'], $config['login'], $config['password']);
     }
 }

@@ -19,7 +19,7 @@ class ApiServiceProvider extends ServiceProvider
         $this->app->scoped(LoyaltyType::class, static function ($app) {
             $value = explode('/', $app['request']->path())[0];
 
-            return LoyaltyType::fromValue($value);
+            return LoyaltyType::from($value);
         });
 
         $this->app->bind(Response::class, ApiResponse::class);

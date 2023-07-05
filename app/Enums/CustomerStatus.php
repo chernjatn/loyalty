@@ -2,12 +2,10 @@
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
-
-class CustomerStatus extends Enum
+enum CustomerStatus: int
 {
-    const DISABLED = 0;
-    const ACTIVE = 1;
-    const NOT_ACTIVATED = 2;
+    case DISABLED = 0;
+    case ACTIVE = 1;
+    case NOT_ACTIVATED = 2;
 
 }

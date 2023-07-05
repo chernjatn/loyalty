@@ -2,9 +2,8 @@
 
 namespace App\Enums;
 
-use BenSampo\Enum\Enum;
 
-final class LoyaltyDriverName extends Enum
+enum LoyaltyDriverName: string
 {
-    const MANZANA_DRIVER = 'Manzana';
+    case MANZANA_DRIVER = 'Manzana';
 }
