@@ -26,7 +26,7 @@ class LoyaltyController extends Controller
     {
         $existsCard = $this->getLoyaltyManager()->existsCard($request->getPhone());
 
-        return getResponse()->success()
+        return response()->success()
             ->setData([
                 'status' => true,
                 'existsCard' => $existsCard
@@ -41,7 +41,7 @@ class LoyaltyController extends Controller
     {
         $smsVerification = new NotificationService(new SmsNotifiable(session()->getId(), $request->getPhone()));
 
-        return getResponse()->success()
+        return response()->success()
             ->setData([
                 'status' => true,
                 'expiration time' => $smsVerification->sendCode()
