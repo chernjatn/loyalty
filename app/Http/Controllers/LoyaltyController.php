@@ -56,7 +56,7 @@ class LoyaltyController extends Controller
     {
         $cardClient = $this->getLoyaltyManager()->getLoyCardByPhone($request->getPhone())->first()->getNumber();
 
-        return getResponse()->success()
+        return response()->success()
             ->setData([
                 'status' => true,
                 'card' => $cardClient
@@ -71,7 +71,7 @@ class LoyaltyController extends Controller
     {
         $activeBalance = $this->getLoyaltyManager()->getLoyCardByPhone($request->getPhone())->first()->getBalance();
 
-        return getResponse()->success()
+        return response()->success()
             ->setData([
                 'status' => true,
                 'activeBalance' => $activeBalance
@@ -86,7 +86,7 @@ class LoyaltyController extends Controller
     {
         $cardClient = $this->getLoyaltyManager()->registerLoyCard($request->getDTO())->getNumber();
 
-        return getResponse()->success()
+        return response()->success()
             ->setData([
                 'status' => true,
                 'card' => $cardClient

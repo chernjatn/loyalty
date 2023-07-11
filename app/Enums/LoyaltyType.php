@@ -5,19 +5,19 @@ namespace App\Enums;
 
 enum LoyaltyType: int
 {
-    case ozerki      = 1;
-    case stoletov    = 2;
-    case superapteka = 3;
-    case samson      = 4;
+    case OZERKI      = 1;
+    case STOLETOV    = 2;
+    case SUPERAPTEKA = 3;
+    case SAMSON      = 4;
 
     public function template(): int
     {
         return match($this)
         {
-            self::ozerki      => 36,
-            self::stoletov    => 34,
-            self::samson      => 35,
-            self::superapteka => 33,
+            self::OZERKI      => 36,
+            self::STOLETOV    => 34,
+            self::SAMSON      => 35,
+            self::SUPERAPTEKA => 33,
         };
     }
 
@@ -25,10 +25,10 @@ enum LoyaltyType: int
     {
         return match($this)
         {
-            self::ozerki      => "SiteOz",
-            self::stoletov    => "SuperApteka",
-            self::samson      => "Samson-farma",
-            self::superapteka => "Stoletov",
+            self::OZERKI      => "SiteOz",
+            self::STOLETOV    => "SuperApteka",
+            self::SAMSON      => "SamsonFarma",
+            self::SUPERAPTEKA => "Stoletov",
         };
     }
 }
