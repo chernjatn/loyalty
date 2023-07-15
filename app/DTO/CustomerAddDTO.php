@@ -14,10 +14,10 @@ use App\Contracts\BaseDTO;
 
 class CustomerAddDTO implements BaseDTO
 {
-    protected ?string $email;
-    protected Phone  $phone;
+    protected Phone  $mobilePhone;
     protected string $firstName;
     protected string $lastName;
+    protected ?string $emailAddress;
     protected ?string $secondName     = null;
     protected bool $allowNotification = true;
     protected bool $allowEmail        = true;
@@ -64,11 +64,6 @@ class CustomerAddDTO implements BaseDTO
             $this->hasChildren = HasChildren::from($fields['familyStatusCode']);
         }
     }
-//
-//    public function getPassword(): string
-//    {
-//        return $this->password;
-//    }
 
     public function getGender(): ?Gender
     {
@@ -97,12 +92,12 @@ class CustomerAddDTO implements BaseDTO
 
     public function getPhone(): Phone
     {
-        return $this->phone;
+        return $this->mobilePhone;
     }
 
     public function getEmail(): ?string
     {
-        return $this->email;
+        return $this->emailAddress;
     }
 
     public function getPrefConn(): ?ContactType

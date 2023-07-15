@@ -16,10 +16,10 @@ class LoyaltyCache
 
     public static function getCurrentCustomerCache(): TaggedCache
     {
-        return Cache::tags([self::CUSTOMER . ':' . session()->getId()]);
+        return Cache::tags([self::CUSTOMER]);
     }
 
-    public static function getCurrentChannelCache(): TaggedCache
+    public static function getCurrentLoyaltyCache(): TaggedCache
     {
         return Cache::tags([self::CHANNEL . ':' . loyaltyType()->value]);
     }
@@ -29,9 +29,9 @@ class LoyaltyCache
         return self::getCurrentCustomerCache()->remember(self::makeKey($key), $ttl, $closure);
     }
 
-    public static function rememberCurrentChannelCache(string $key, Closure $closure, $ttl = 300)
+    public static function rememberCurrentLoyaltyCache(string $key, Closure $closure, $ttl = 300)
     {
-        return self::getCurrentChannelCache()->remember(self::makeKey($key), $ttl, $closure);
+        return self::getCurrentLoyaltyCache()->remember(self::makeKey($key), $ttl, $closure);
     }
 
     public static function flushCurrentCustomerCache()
@@ -39,20 +39,13 @@ class LoyaltyCache
         self::getCurrentCustomerCache()->flush();
     }
 
-    public static function deleteCurrentChannelCache(string $key)
+    public static function deleteCurrentLoyaltyCache(string $key)
     {
-        return self::getCurrentChannelCache()->delete(self::makeKey($key));
+        return self::getCurrentLoyaltyCache()->delete(self::makeKey($key));
     }
 
     private static function makeKey(string $key): string
     {
-        return request('channel_code', '0') . ':' . $key;
-    }
-
-    private static function makeNullCache()
-    {
-        static $nullCache = null;
-
-        return $nullCache ??= new TaggedCache(new NullStore(), new TagSet(new NullStore()));
+        return loyaltyType()->value . ':' . $key;
     }
 }

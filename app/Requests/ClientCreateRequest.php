@@ -2,7 +2,6 @@
 
 namespace App\Requests;
 
-use App\Contracts\BaseDTO;
 use App\Enums\CustomerStatus;
 use App\Enums\Gender;
 use App\Enums\FamilyStatus;
@@ -52,7 +51,7 @@ class ClientCreateRequest extends SmsVerificationRequest implements GetterDTO
         ];
     }
 
-    public function getDTO(): BaseDTO
+    public function getDTO(): CustomerAddDTO
     {
         return new CustomerAddDTO($this->val);
     }

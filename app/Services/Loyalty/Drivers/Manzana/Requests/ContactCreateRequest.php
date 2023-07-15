@@ -44,7 +44,6 @@ class ContactCreateRequest extends JSONRequest
             'Firstname'         => $this->customerAddDTO->getFirstname(),
             'Lastname'          => $this->customerAddDTO->getLastname(),
             'MiddleName'        => $this->customerAddDTO->getSecondName() ?? '',
-            //'Password'          => $this->customerAddDTO->getPassword(),
             'BirthDate'         => $this->customerAddDTO->getBirthdate()->format('d-m-y H:i:s'),
             'GenderCode'        => $gender,
             'AllowNotification' => $this->customerAddDTO->getEmailAgree(),

@@ -51,11 +51,11 @@ class ManzanaDriver implements LoyaltyDriver
         $key = 'getloyaltycustomerbyphone:' . $phone->getPhoneNumber();
 
         if (!$useCache) {
-            LoyaltyCache::deleteCurrentChannelCache($key);
+            LoyaltyCache::deleteCurrentLoyaltyCache($key);
             return $closure();
         }
 
-        return LoyaltyCache::rememberCurrentChannelCache($key, $closure);
+        return LoyaltyCache::rememberCurrentLoyaltyCache($key, $closure);
     }
 
     public function registerLoyCard(CustomerAddDTO $customerAddDTO): LoyCard
@@ -88,15 +88,10 @@ class ManzanaDriver implements LoyaltyDriver
         $closure = fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
 
         if (!$useCache) {
-            LoyaltyCache::deleteCurrentChannelCache($phone->getPhoneNumber());
+            LoyaltyCache::deleteCurrentLoyaltyCache($phone->getPhoneNumber());
             return $closure();
         }
 
-        return LoyaltyCache::rememberCurrentChannelCache('getcontactbyphone:' . $phone->getPhoneNumber(), $closure);
+        return LoyaltyCache::rememberCurrentLoyaltyCache('getcontactbyphone:' . $phone->getPhoneNumber(), $closure);
     }
-
-//    private function getChannelConfig(): array
-//    {
-//        return config('manzana.channels.' . $this->loyaltyType->value);
-//    }
 }
