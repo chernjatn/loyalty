@@ -10,7 +10,6 @@ use App\Enums\LoyaltyType;
 use App\Enums\HasChildren;
 use Illuminate\Validation\Rule;
 use App\DTO\CustomerAddDTO;
-use Illuminate\Validation\Rules\Enum;
 
 class ClientCreateRequest extends SmsVerificationRequest
 {
@@ -23,11 +22,11 @@ class ClientCreateRequest extends SmsVerificationRequest
                 'genderCode' => ['required', Rule::in(Gender::cases())],
                 'emailAddress' => ['string'],
                 'birthDate' => ['date', 'before:today'],
-                'familyStatusCode' => [new Enum(FamilyStatus::class)],
-                'hasChildrenCode' => [new Enum(HasChildren::class)],
-                'orgUnitId' => [new Enum(LoyaltyType::class)],
+                'familyStatusCode' => Rule::in(FamilyStatus::cases()),
+                'hasChildrenCode' => Rule::in(HasChildren::cases()),
+                'orgUnitId' => Rule::in(LoyaltyType::cases()),
                 'communicationMethod' => [Rule::in(ContactType::cases())],
-                'status' => [new Enum(CustomerStatus::class)],
+                'status' => Rule::in(CustomerStatus::cases()),
                 'allowNotification' => ['bool'],
                 'allowEmail' => ['bool'],
                 'allowSms' => ['bool'],
@@ -39,14 +38,14 @@ class ClientCreateRequest extends SmsVerificationRequest
     public function messages()
     {
         return [
-            'phone.required'       => __('customer.phone_required'),
-            'phone.regex'          => __('customer.phone_mallformed'),
-            'firstName.required'   => __('customer.first_name_required'),
-            'lastName.required'    => __('customer.last_name_required'),
-            'middleName.string'    => __('customer.middle_name_required'),
-            'birthdate.required'   => __('customer.birthdate_required'),
-            'birthdate.date'       => __('customer.birthdate_invalid'),
-            'gender.required'      => __('customer.gender_required'),
+            'phone.required'     => __('customer.phone_required'),
+            'phone.regex'        => __('customer.phone_mallformed'),
+            'firstName.required' => __('customer.first_name_required'),
+            'lastName.required'  => __('customer.last_name_required'),
+            'middleName.string'  => __('customer.middle_name_required'),
+            'birthdate.required' => __('customer.birthdate_required'),
+            'birthdate.date'     => __('customer.birthdate_invalid'),
+            'gender.required'    => __('customer.gender_required'),
         ];
     }
 
