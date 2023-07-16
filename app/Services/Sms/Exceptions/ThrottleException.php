@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\Loyalty;
+namespace App\Services\Sms\Exceptions;
 
 class ThrottleException extends \Exception
 {

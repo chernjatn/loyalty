@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\Loyalty;
+namespace App\Services\Sms\Exception;
 
 use Carbon\Carbon;
 

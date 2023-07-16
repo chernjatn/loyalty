@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\Loyalty;
+namespace App\Exceptions;
 
 use Exception;
 use Throwable;

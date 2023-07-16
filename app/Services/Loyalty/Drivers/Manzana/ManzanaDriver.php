@@ -11,7 +11,7 @@ use App\Entity\LoyaltyCustomer;
 use App\DTO\CustomerAddDTO;
 use App\Services\Loyalty\Drivers\Manzana\Requests\CardRequest;
 use App\Services\Loyalty\Drivers\Manzana\Requests\ContactByPhoneRequest;
-use App\Exceptions\Loyalty\LoyaltyException;
+use App\Services\Loyalty\Exceptions\LoyaltyException;
 use App\Services\Loyalty\Drivers\Manzana\Requests\ContactCreateRequest;
 use App\Services\Loyalty\Drivers\Manzana\Requests\ContactUpdateRequest;
 use App\Services\Loyalty\Drivers\Manzana\Requests\LoyCardCreateRequest;

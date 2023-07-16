@@ -2,7 +2,7 @@
 
 namespace Ultra\Shop\Services\Loyalty;
 
-use Ultra\Shop\VO\Phone;
+use app\Entity\Phone;
 
 class LoyaltyCustomer
 {

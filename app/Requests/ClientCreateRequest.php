@@ -9,11 +9,10 @@ use App\Enums\ContactType;
 use App\Enums\LoyaltyType;
 use App\Enums\HasChildren;
 use Illuminate\Validation\Rule;
-use App\Contracts\GetterDTO;
 use App\DTO\CustomerAddDTO;
 use Illuminate\Validation\Rules\Enum;
 
-class ClientCreateRequest extends SmsVerificationRequest implements GetterDTO
+class ClientCreateRequest extends SmsVerificationRequest
 {
     public function rules()
     {
