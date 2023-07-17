@@ -3,6 +3,7 @@
 namespace Ultra\Shop\DTO\Entity;
 
 use LogicException;
+use App\DTO\CustomerAddDTO;
 
 class CustomerUpdateDTO extends CustomerAddDTO
 {

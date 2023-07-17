@@ -10,9 +10,8 @@ use App\Enums\ContactType;
 use App\Entity\Phone;
 use App\Enums\CustomerStatus;
 use App\Enums\Gender;
-use App\Contracts\BaseDTO;
 
-class CustomerAddDTO implements BaseDTO
+class CustomerAddDTO
 {
     protected Phone  $mobilePhone;
     protected string $firstName;

@@ -19,8 +19,6 @@ use App\Services\Loyalty\LoyaltyCache;
 
 class ManzanaDriver implements LoyaltyDriver
 {
-    const BLOCK_TTL = 60;
-
     private LoyaltyType $loyaltyType;
 
     public function __construct()
