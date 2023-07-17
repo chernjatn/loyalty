@@ -8,7 +8,6 @@ use App\Enums\FamilyStatus;
 use App\Enums\ContactType;
 use App\Enums\LoyaltyType;
 use App\Enums\HasChildren;
-use Illuminate\Validation\Rule;
 use App\DTO\CustomerAddDTO;
 use Illuminate\Validation\Rules\Enum;
 

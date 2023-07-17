@@ -27,8 +27,8 @@ class PhoneRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone.required' => 'Введите телефонный номер',
-            'phone.regex' => 'Введите телефонный номер в формате 79999999999',
+            'phone.required'     => __('customer.phone_required'),
+            'phone.regex'        => __('customer.phone_mallformed'),
         ];
     }
 }
