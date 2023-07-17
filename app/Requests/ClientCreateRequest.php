@@ -10,6 +10,7 @@ use App\Enums\LoyaltyType;
 use App\Enums\HasChildren;
 use Illuminate\Validation\Rule;
 use App\DTO\CustomerAddDTO;
+use Illuminate\Validation\Rules\Enum;
 
 class ClientCreateRequest extends SmsVerificationRequest
 {
@@ -19,14 +20,14 @@ class ClientCreateRequest extends SmsVerificationRequest
                 'lastName' => ['required', 'string'],
                 'firstName' => ['required', 'string'],
                 'middleName' => ['required', 'string'],
-                'genderCode' => ['required', Rule::in(Gender::cases())],
+                'genderCode' => ['required', new Enum(Gender::class)],
                 'emailAddress' => ['string'],
                 'birthDate' => ['date', 'before:today'],
-                'familyStatusCode' => Rule::in(FamilyStatus::cases()),
-                'hasChildrenCode' => Rule::in(HasChildren::cases()),
-                'orgUnitId' => Rule::in(LoyaltyType::cases()),
-                'communicationMethod' => [Rule::in(ContactType::cases())],
-                'status' => Rule::in(CustomerStatus::cases()),
+                'familyStatusCode' => new Enum(FamilyStatus::class),
+                'hasChildrenCode' => new Enum(HasChildren::class),
+                'orgUnitId' => new Enum(LoyaltyType::class),
+                'communicationMethod' => new Enum(ContactType::class),
+                'status' => new Enum(CustomerStatus::class),
                 'allowNotification' => ['bool'],
                 'allowEmail' => ['bool'],
                 'allowSms' => ['bool'],

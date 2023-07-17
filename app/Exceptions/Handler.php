@@ -6,10 +6,6 @@ use Throwable;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
-use App\Response\ApiResponse;
-use App\Exceptions\Loyalty\BadRequestException;
-use App\Exceptions\Loyalty\CustomValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -44,7 +40,6 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        dd($exception);
         if ($exception instanceof ValidationException) {
             $exception = CustomValidationException::fromValidationException($exception);
         }
@@ -62,10 +57,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof BadRequestException) {
             $data += $exception->getData();
 
-            return (new ApiResponse())
-                ->fail()
-                ->setStatusCode($code)
-                ->setData($data);
+            return response($data, $code);
         }
 
         return parent::render($request, $exception);

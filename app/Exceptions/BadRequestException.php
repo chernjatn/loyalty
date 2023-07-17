@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Throwable;
 use Illuminate\Http\Response;
-use App\Contracts\Exception\DontReportException;
+use App\Exceptions\Contracts\DontReportException;
 
 class BadRequestException extends Exception implements DontReportException
 {

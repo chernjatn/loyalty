@@ -5,21 +5,21 @@ namespace App\Entity;
 class LoyaltyCustomer
 {
     function __construct(
-        protected readonly string $id,
-        protected readonly Phone $mobilePhone,
-        protected readonly ?string $lastName,
-        protected readonly ?string $firstName,
-        protected readonly ?string $middleName,
-        protected readonly ?int $genderCode,
-        protected readonly ?string $birthDate,
-        protected readonly ?int $familyStatusCode,
-        protected readonly int $hasChildrenCode,
-        protected readonly ?string $emailAddress,
-        protected readonly ?bool $allowNotification,
-        protected readonly ?bool $allowEmail,
-        protected readonly ?bool $allowSms,
-        protected readonly ?bool $allowPhone,
-        protected readonly ?bool $allowPush,
+        public readonly string $id,
+        public readonly Phone $mobilePhone,
+        public readonly ?string $lastName,
+        public readonly ?string $firstName,
+        public readonly ?string $middleName,
+        public readonly ?int $genderCode,
+        public readonly ?string $birthDate,
+        public readonly ?int $familyStatusCode,
+        public readonly int $hasChildrenCode,
+        public readonly ?string $emailAddress,
+        public readonly ?bool $allowNotification,
+        public readonly ?bool $allowEmail,
+        public readonly ?bool $allowSms,
+        public readonly ?bool $allowPhone,
+        public readonly ?bool $allowPush,
     ) {
     }
 }

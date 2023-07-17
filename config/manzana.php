@@ -41,43 +41,6 @@ return [
                 'pickup' => []
             ],
         ],
-        'express' => [
-            'supports_favoritable_categories' => true,
-            'default_utm_campaign'            => 'Интернет магазин',
-    #        'default_loy_card_type'           => LoyCardType::SUPERAPTEKA,
-            'loy_card_default_auth'           => 2500332293609,
-            'loy_card_default_unauth'         => 2500332293609,
-            'emission_tpl_autoreg'            => 'virtual_auto_sa',
-            'org_name'                        => 'ozerki',
-            'app_id'                          => 33,
-            'organization'                    => 3,
-            'brand'                           => 1,
-            'soap'                            => [
-                'auth' => [
-                    'login'    => 'ozerki\internetapteka',
-                    'password' => 'dAru_Yx8P',
-                ],
-                'wsdl'     => 'http://mnz-crm.erkapharm.com:8083/posprocessing.asmx?wsdl',
-            ],
-            'json'                    => [
-                'customer_domain'   => 'https://mnz-cos.erkapharm.com/CustomerOfficeService',
-                'manager_domain'    => 'https://mnz-mos.erkapharm.com/ManagerOfficeService',
-                'partner_id'        => '67F23196-1DF8-E611-80D8-00155DFA8043',
-                'super_session'     => '01A02BFE-1EFD-46C7-812E-446EC4A34FB1',
-            ],
-            'extended'                => [
-                'common' => [
-                    'Atr_SUPERAPTEKA' => 'Интернет магазин',
-                    'Atp_SUPERAPTEKA' => 'Интернет-магазин_СУПЕРАПТЕКА_все чеки',
-                    'Atp_3'           => 'Супераптека',
-                    'Ats_Im_sa'       => 'Интернет магазин',
-                ],
-                'delivery' => [
-                    'Atp_del_sa'      => 'Доставка сайт супераптека',
-                ],
-                'pickup' => []
-            ],
-        ],
         'ozerki'      => [
             'supports_favoritable_categories' => true,
             'default_utm_campaign'            => 'Интернет магазин',

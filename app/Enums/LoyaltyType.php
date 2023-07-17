@@ -26,9 +26,9 @@ enum LoyaltyType: int
         return match($this)
         {
             self::OZERKI      => "SiteOz",
-            self::STOLETOV    => "SuperApteka",
+            self::STOLETOV    => "Stoletov",
             self::SAMSON      => "SamsonFarma",
-            self::SUPERAPTEKA => "Stoletov",
+            self::SUPERAPTEKA => "SuperApteka",
         };
     }
 }

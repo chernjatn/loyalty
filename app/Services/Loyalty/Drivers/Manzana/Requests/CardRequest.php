@@ -17,7 +17,7 @@ class CardRequest extends BaseByContactRequest
             $this->get(
                 $this->customerDomain . self::CARD_FILTER_PATH,
                 $this->prepareSuperQuery([
-                    'contactId' => $this->contact->getId()
+                    'contactId' => $this->contact->id
                 ]),
                 'value'
             ),

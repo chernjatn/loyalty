@@ -26,7 +26,7 @@ abstract class JSONRequest
 
     public function __construct(LoyaltyType $loyaltyType)
     {
-        $config = config('manzana.loyaltyType.' . $loyaltyType->name, fn () => config('manzana.default'));
+        $config = config('manzana.loyaltyType.' . mb_strtolower($loyaltyType->name), fn () => config('manzana.default'));
 
         $this->config         = $config;
         $this->appId          = $config['app_id'];

@@ -88,6 +88,9 @@ class LoyaltyController extends Controller
         ]);
     }
 
+    /**
+     * @return LoyaltyManager
+     */
     public function getLoyaltyManager()
     {
         return new LoyaltyManager(app());

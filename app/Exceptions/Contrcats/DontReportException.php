@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts\Exception;
+namespace App\Exceptions\Contracts;
 
 /**
  * Не логгируемое исключение
