@@ -36,7 +36,7 @@ class ContactUpdateRequest extends JSONRequest
     {
         $gender = 0;
         if ($this->customerAddDTO->getGender()) {
-            $gender = $this->customerAddDTO->getGender()->is(Gender::M) ? 1 : 0;
+            $gender = $this->customerAddDTO->getGender()->value == 'm' ? 1 : 0;
         }
 
         return [
@@ -44,8 +44,7 @@ class ContactUpdateRequest extends JSONRequest
             'EmailAddress'      => $this->customerAddDTO->getEmail(),
             'Firstname'         => $this->customerAddDTO->getFirstname(),
             'Lastname'          => $this->customerAddDTO->getLastname(),
-            'MiddleName'        => $this->customerAddDTO->getSecondName() ?? '',
-            //'Password'          => $this->customerAddDTO->getPassword(),
+            'MiddleName'        => $this->customerAddDTO->getMiddleName() ?? '',
             'BirthDate'         => $this->customerAddDTO->getBirthdate()->format('d-m-y H:i:s'),
             'GenderCode'        => $gender,
             'AllowNotification' => $this->customerAddDTO->getEmailAgree(),

@@ -4,8 +4,8 @@ namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
 use App\Enums\LoyaltyType;
 use App\Entity\Phone;
-use App\Entity\Contact;
 use App\Entity\LoyaltyCustomer;
+use Carbon\Carbon;
 
 class ContactByPhoneRequest extends JSONRequest
 {
@@ -37,7 +37,7 @@ class ContactByPhoneRequest extends JSONRequest
                 $resp['FirstName'],
                 $resp['MiddleName'],
                 $resp['GenderCode'],
-                $resp['BirthDate'],
+                Carbon::parse($resp['BirthDate']),
                 $resp['FamilyStatusCode'],
                 $resp['HasChildrenCode'],
                 $resp['EmailAddress'] ?: null,

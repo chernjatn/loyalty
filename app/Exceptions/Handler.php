@@ -40,6 +40,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+        dd($exception);
         if ($exception instanceof ValidationException) {
             $exception = CustomValidationException::fromValidationException($exception);
         }
