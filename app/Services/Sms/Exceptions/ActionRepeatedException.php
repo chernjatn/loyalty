@@ -3,6 +3,7 @@
 namespace App\Services\Sms\Exception;
 
 use Carbon\Carbon;
+use App\Exceptions\BadRequestException;
 
 class ActionRepeatedException extends BadRequestException
 {
