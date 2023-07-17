@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Sms\Exception;
+namespace App\Services\Cache\Exceptions;
 
 use Carbon\Carbon;
 use App\Exceptions\BadRequestException;

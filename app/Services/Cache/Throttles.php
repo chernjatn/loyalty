@@ -6,7 +6,7 @@ use Closure;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\RateLimiter;
-use App\Services\Sms\Exception\ActionRepeatedException;
+use App\Services\Cache\Exceptions\ActionRepeatedException;
 
 trait Throttles
 {
