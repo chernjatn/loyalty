@@ -7,9 +7,9 @@ use App\Exceptions\BadRequestException;
 
 class ActionRepeatedException extends BadRequestException
 {
-    public function __construct(string $messageId, Carbon $lastActionTime)
+    public function __construct(string $message, Carbon $lastActionTime)
     {
-        $message = __($messageId, ['date' => $lastActionTime->isoFormat('D MMMM YYYY'), 'time' => $lastActionTime->format('H:i')]);
+        $message = __($message, ['seconds' => Carbon::now()->diffInSeconds($lastActionTime)]);
 
         parent::__construct(__($message));
     }

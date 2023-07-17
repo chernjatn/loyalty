@@ -2,11 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Entity\Phone;
-use App\Services\Sms\NotificationService;
+use Closure;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
-use Closure;
+use App\Entity\Phone;
+use App\Services\Sms\NotificationService;
+
 
 class AddFieldBySegmentsUrl
 {

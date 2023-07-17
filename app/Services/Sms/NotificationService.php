@@ -36,11 +36,11 @@ class NotificationService
         $clientPhone = $this->smsNotifiable->getPhoneAttribute()->getPhoneNumber();
 
         $this->throttle('sendCode', $this->key, fn () => $this->smsManager->to($clientPhone)
-            ->send($verificationCode), 'feedback.already_sms_sended', self::GET_DECAY_SECONDS);
+            ->send($verificationCode), __('validation.custom.too_many_attempts'), self::GET_DECAY_SECONDS);
 
         $this->connection->set($this->key, $verificationCode, 'EX', self::KEY_EXP);
 
-        return Carbon::now()->addSeconds(self::KEY_EXP);
+        return Carbon::now()->addSeconds(self::GET_DECAY_SECONDS);
     }
 
     protected function genVerificationCode(): string

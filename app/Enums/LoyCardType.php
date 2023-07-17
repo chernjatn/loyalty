@@ -16,18 +16,19 @@ enum LoyCardType: string
     case KARTA_ZDORV   = 'kz';
     case APTEKA_RU     = 'apteka_ru';
 
-    public static function fromChannel(LoyaltyType $loyaltyType): self
+    public static function fromLoyalty(LoyaltyType $loyaltyType): self
     {
         switch ($loyaltyType->value) {
-            case LoyaltyType::ozerki:
+            case LoyaltyType::OZERKI:
                 return LoyCardType::ZOZ;
-            case LoyaltyType::samson:
+            case LoyaltyType::SAMSON:
                 return LoyCardType::SUPERSAMSON;
-            case LoyaltyType::stoletov:
+            case LoyaltyType::STOLETOV:
                 return LoyCardType::YA_BUDU_JIT;
-            case LoyaltyType::superapteka:
+            case LoyaltyType::SUPERAPTEKA:
                 return LoyCardType::SUPERAPTEKA;
         }
+
         throw new LogicException('No loyCardType for channel:' . $loyaltyType->value);
     }
 }

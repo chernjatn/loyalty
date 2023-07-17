@@ -17,10 +17,10 @@ trait Throttles
         $ttl       = $blockTtl ?? self::getThrottleDefaultTtl();
 
         if (!RateLimiter::attempt($methodKey, 1, $closure, $ttl)) {
-            throw new ActionRepeatedException($onExistsMessage, Carbon::createFromTimestamp(Cache::get($timeKey)));
+            throw new ActionRepeatedException($onExistsMessage, Carbon::createFromTimestamp(Cache::store('redis')->get($timeKey)));
         }
 
-        Cache::add($timeKey, Carbon::now()->timestamp, $ttl * 2);
+        Cache::store('redis')->add($timeKey, Carbon::now()->addSeconds($ttl)->timestamp, $ttl);
     }
 
     private static function getThrottleDefaultTtl(): int

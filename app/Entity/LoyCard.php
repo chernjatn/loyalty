@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-//use Money\Money;
 use App\Enums\LoyCardType;
 
 class LoyCard
@@ -27,10 +26,5 @@ class LoyCard
     {
         return $this->balance;
     }
-
-//    public function is(LoyCard $loyCard): bool
-//    {
-//        return $loyCard->getType()->is($this->type) && $loyCard->getNumber() === $this->getNumber();
-//    }
 }
 

@@ -51,6 +51,6 @@ class ClientCreateRequest extends SmsVerificationRequest
 
     public function getDTO(): CustomerAddDTO
     {
-        return new CustomerAddDTO($this->val);
+        return new CustomerAddDTO($this->all());
     }
 }

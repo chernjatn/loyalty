@@ -36,11 +36,11 @@ class CardRequest extends BaseByContactRequest
         );
     }
 
-    protected function getLoyCardType(array $cardInfo): LoyCardType
-    {
-        static $partnerLoycardType = null;
-        $partnerLoycardType ??= config('manzana.partner_loycard_type');
-
-        return LoyCardType::fromValue($partnerLoycardType[mb_strtoupper($cardInfo['PartnerId'])]);
-    }
+//    protected function getLoyCardType(array $cardInfo): LoyCardType
+//    {
+//        static $partnerLoycardType = null;
+//        $partnerLoycardType ??= config('manzana.partner_loycard_type');
+//
+//        return LoyCardType::from($partnerLoycardType[mb_strtoupper($cardInfo['PartnerId'])]);
+//    }
 }
