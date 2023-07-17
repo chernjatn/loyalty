@@ -5,8 +5,8 @@ namespace App\Entity;
 class Contact extends LoyaltyCustomer
 {
     public function __construct(
-        protected string $id,
-        protected Phone $mobilePhone,
+        protected readonly string $id,
+        protected readonly Phone $mobilePhone,
     ) {
         parent::__construct(
             $id,

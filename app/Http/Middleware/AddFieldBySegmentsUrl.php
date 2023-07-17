@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 use Closure;
 
-class AddSentCodeField
+class AddFieldBySegmentsUrl
 {
     public function handle(Request $request, Closure $next)
     {
@@ -21,6 +21,10 @@ class AddSentCodeField
             if (!is_null($code)) {
                 $request = $request->merge(['sentCode' => $code]);
             }
+        }
+
+        if ($request->route('cardId')) {
+            $request->merge(['card' => $request->route('cardId')]);
         }
 
         return $next($request);

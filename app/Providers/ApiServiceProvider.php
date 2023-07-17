@@ -21,8 +21,6 @@ class ApiServiceProvider extends ServiceProvider
 
             return LoyaltyType::from($value);
         });
-
-        $this->app->bind(Response::class, ApiResponse::class);
     }
 
     /**

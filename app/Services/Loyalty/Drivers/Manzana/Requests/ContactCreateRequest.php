@@ -35,7 +35,7 @@ class ContactCreateRequest extends JSONRequest
     {
         $gender = 0;
         if ($this->customerAddDTO->getGender()) {
-            $gender = $this->customerAddDTO->getGender()->is(Gender::M) ? 1 : 0;
+            $gender = $this->customerAddDTO->getGender()->value == 'm' ? 1 : 0;
         }
 
         return [

@@ -16,11 +16,6 @@ class CardRequest extends SmsVerificationRequest
         return $this->input('card');
     }
 
-    protected function prepareForValidation()
-    {
-        $this->merge(['card' => $this->route('cardId')]);
-    }
-
     public function messages()
     {
         return [
