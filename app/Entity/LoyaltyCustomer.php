@@ -2,26 +2,25 @@
 
 namespace App\Entity;
 
-use Carbon\Carbon;
-
 class LoyaltyCustomer
 {
     function __construct(
         public readonly string $id,
         public readonly Phone $phone,
-        public readonly ?string $lastName,
-        public readonly ?string $firstName,
-        public readonly ?string $middleName,
-        public readonly ?int $genderCode,
-        public readonly ?Carbon $birthDate,
-        public readonly ?int $familyStatusCode,
-        public readonly int $hasChildrenCode,
-        public readonly ?string $emailAddress,
-        public readonly ?bool $allowNotification,
-        public readonly ?bool $allowEmail,
-        public readonly ?bool $allowSms,
-        public readonly ?bool $allowPhone,
-        public readonly ?bool $allowPush,
+        public readonly ?string $lastName = null,
+        public readonly ?string $firstName = null,
+        public readonly ?string $middleName = null,
+        public readonly ?int $genderCode = null,
+        public readonly ?string $birthDate = null,
+        public readonly ?int $familyStatusCode = null,
+        public readonly ?int $hasChildrenCode = null,
+        public readonly ?int $communicationMethod = null,
+        public readonly ?string $emailAddress = null,
+        public readonly ?bool $allowNotification = null,
+        public readonly ?bool $allowEmail = null,
+        public readonly ?bool $allowSms = null,
+        public readonly ?bool $allowPhone = null,
+        public readonly ?bool $allowPush = null,
     ) {
     }
 }

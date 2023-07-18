@@ -12,18 +12,17 @@ class LoyCardCreateRequest extends BaseByContactRequest
     public function processRequest(): ?LoyCard
     {
         $emissionTplAutoreg = $this->config['emission_tpl_autoreg'];
-        $defaultLoyCardType = LoyCardType::from($this->config['default_loy_card_type']);
 
         return transform(
             $this->post(
                 $this->managerDomain . self::REQUEST_APE_PATH,
                 $this->preparePostSuperQuery([
-                    'ContactId'                  => $this->contact->getId(),
+                    'ContactId'                  => $this->contact->id,
                     'EmissionTemplateExternalId' => $emissionTplAutoreg
                 ]),
                 'Number'
             ),
-            fn ($cardNumber) => new LoyCard($cardNumber, $defaultLoyCardType)
+            fn ($cardNumber) => new LoyCard($cardNumber)
         );
     }
 }

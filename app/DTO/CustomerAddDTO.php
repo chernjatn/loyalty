@@ -2,10 +2,10 @@
 
 namespace App\DTO;
 
-use App\Enums\FamilyStatus;
-use App\Enums\HasChildren;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use App\Enums\FamilyStatus;
+use App\Enums\HasChildren;
 use App\Enums\ContactType;
 use App\Entity\Phone;
 use App\Enums\Gender;
@@ -101,6 +101,16 @@ class CustomerAddDTO
     public function getCommunicationMethod(): ?ContactType
     {
         return $this->communicationMethod;
+    }
+
+    public function getFamilyStatusCode(): ?FamilyStatus
+    {
+        return $this->familyStatusCode;
+    }
+
+    public function getHasChildrenCode(): ?HasChildren
+    {
+        return $this->hasChildrenCode;
     }
 
     public function getEmailAgree(): bool

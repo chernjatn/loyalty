@@ -2,13 +2,8 @@
 
 namespace App\Enums;
 
-enum Gender: string
+enum Gender: int
 {
-    case M = 'm';
-    case F = 'f';
-
-    public static function getDescription($value): string
-    {
-        return __('common.gender.' . $value);
-    }
+    case M = 1;
+    case F = 2;
 }

@@ -1,7 +1,5 @@
 <?php
 
-use App\Entity\LoyCard;
-
 return [
     'loyaltyType'                => [
         'superapteka' => [
@@ -11,7 +9,7 @@ return [
             'loy_card_default_auth'           => 2500332293609,
             'loy_card_default_unauth'         => 2500332293609,
             'emission_tpl_autoreg'            => 'virtual_auto_sa',
-            'org_name'                        => 'ozerki',
+            'org_name'                        => 'superapteka',
             'app_id'                          => 33,
             'organization'                    => 3,
             'brand'                           => 1,
@@ -49,7 +47,7 @@ return [
             'loy_card_default_unauth'         => 2500189805123,
             'emission_tpl_autoreg'            => 'virtual_auto_oz',
             'org_name'                        => 'ozerki',
-            'app_id'                          => 34,
+            'app_id'                          => 36,
             'organization'                    => 3,
             'brand'                           => 1,
             'soap'                            => [

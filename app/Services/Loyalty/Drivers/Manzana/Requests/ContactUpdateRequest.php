@@ -4,20 +4,20 @@ namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
 use App\Enums\LoyaltyType;
 use App\DTO\CustomerAddDTO;
-use App\Enums\Gender;
 use App\Entity\Contact;
 
 class ContactUpdateRequest extends JSONRequest
 {
     private const REQUEST_APE_PATH  = '/Contact/Update';
     private CustomerAddDTO $customerAddDTO;
+    private string $contactId;
 
-    public function __construct(LoyaltyType $loyaltyType, CustomerAddDTO $customerAddDTO)
+    public function __construct(LoyaltyType $loyaltyType, CustomerAddDTO $customerAddDTO, string $contactId)
     {
         parent::__construct($loyaltyType);
         $this->customerAddDTO = $customerAddDTO;
+        $this->contactId = $contactId;
     }
-
 
     /** @return ?Contact */
     public function processRequest()
@@ -34,26 +34,23 @@ class ContactUpdateRequest extends JSONRequest
 
     protected function getContactFields()
     {
-        $gender = 0;
-        if ($this->customerAddDTO->getGender()) {
-            $gender = $this->customerAddDTO->getGender()->value == 'm' ? 1 : 0;
-        }
-
         return [
-            'MobilePhone'       => '+' . $this->customerAddDTO->getPhone()->getPhoneNumber(),
-            'EmailAddress'      => $this->customerAddDTO->getEmail(),
-            'Firstname'         => $this->customerAddDTO->getFirstname(),
-            'Lastname'          => $this->customerAddDTO->getLastname(),
-            'MiddleName'        => $this->customerAddDTO->getMiddleName() ?? '',
-            'BirthDate'         => $this->customerAddDTO->getBirthdate()->format('d-m-y H:i:s'),
-            'GenderCode'        => $gender,
-            'AllowNotification' => $this->customerAddDTO->getEmailAgree(),
-            'AllowEmail'        => $this->customerAddDTO->getEmailAgree(),
-            'AllowSms'          => $this->customerAddDTO->getSmsAgree(),
-            'AllowPhone'        => $this->customerAddDTO->getPhoneAgree(),
-            'AllowPush'         => $this->customerAddDTO->getPushAgree(),
-            'AgreeToTerms'      => true,
-            'appid'             => $this->appId
+            'id'                  => $this->contactId,
+            'MobilePhone'         => '+' . $this->customerAddDTO->getPhone()->getPhoneNumber(),
+            'EmailAddress'        => $this->customerAddDTO->getEmail(),
+            'FirstName'           => $this->customerAddDTO->getFirstname(),
+            'Lastname'            => $this->customerAddDTO->getLastname(),
+            'MiddleName'          => $this->customerAddDTO->getMiddleName() ?? '',
+            'BirthDate'           => $this->customerAddDTO->getBirthdate()->format('Y-m-d'),
+            'GenderCode'          => $this->customerAddDTO->getGender()->value,
+            'FamilyStatusCode'    => $this->customerAddDTO->getFamilyStatusCode()?->value,
+            'HasChildrenCode'     => $this->customerAddDTO->getHasChildrenCode()?->valueForManzana(),
+            'CommunicationMethod' => $this->customerAddDTO->getCommunicationMethod()?->value,
+            'AllowNotification'   => $this->customerAddDTO->getEmailAgree(),
+            'AllowEmail'          => $this->customerAddDTO->getEmailAgree(),
+            'AllowSms'            => $this->customerAddDTO->getSmsAgree(),
+            'AllowPhone'          => $this->customerAddDTO->getPhoneAgree(),
+            'AllowPush'           => $this->customerAddDTO->getPushAgree(),
         ];
     }
 }

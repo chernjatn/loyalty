@@ -63,13 +63,12 @@ class ManzanaDriver implements LoyaltyDriver
             if (!is_null($contact)) {
                 $fields = get_object_vars($contact);
                 unset($fields['id']);
-                //dd($fields, $customerAddDTO);
+
                 if ($customerAddDTO == new CustomerAddDTO($fields)) {
-                   // dd('test');
                     return $contact;
                 }
-//dd('test2');
-                return (new ContactUpdateRequest($this->loyaltyType, $customerAddDTO))->processRequest();
+
+                return (new ContactUpdateRequest($this->loyaltyType, $customerAddDTO, $contact->id))->processRequest();
             }
 
             return (new ContactCreateRequest($this->loyaltyType, $customerAddDTO))->processRequest();
