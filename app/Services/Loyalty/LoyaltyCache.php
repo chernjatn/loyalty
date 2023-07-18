@@ -2,31 +2,29 @@
 
 namespace App\Services\Loyalty;
 
-use App\Enums\LoyaltyType;
 use Closure;
-use Illuminate\Cache\NullStore;
 use Illuminate\Cache\TaggedCache;
-use Illuminate\Cache\TagSet;
 use Illuminate\Support\Facades\Cache;
+use App\Entity\Phone;
 
 class LoyaltyCache
 {
-    private const CUSTOMER = 'loyalty:current_customer';
-    private const CHANNEL  = 'loyalty:current_channel';
+    private const CUSTOMER = 'loyalty:current_customer_by_phone';
+    private const LOYALTY = 'loyalty:current_loyalty_type';
 
-    public static function getCurrentCustomerCache(): TaggedCache
+    public static function getCurrentCustomerCache(Phone $phone): TaggedCache
     {
-        return Cache::tags([self::CUSTOMER]);
+        return Cache::tags([self::CUSTOMER . $phone->getPhoneNumber()]);
     }
 
     public static function getCurrentLoyaltyCache(): TaggedCache
     {
-        return Cache::tags([self::CHANNEL . ':' . loyaltyType()->value]);
+        return Cache::tags([self::LOYALTY . ':' . loyaltyType()->value]);
     }
 
-    public static function rememberCurrentCustomerCache(string $key, Closure $closure, $ttl = 300)
+    public static function rememberCurrentCustomerCache(string $key, Phone $phone, Closure $closure, $ttl = 300)
     {
-        return self::getCurrentCustomerCache()->remember(self::makeKey($key), $ttl, $closure);
+        return self::getCurrentCustomerCache($phone)->remember(self::makeKey($key), $ttl, $closure);
     }
 
     public static function rememberCurrentLoyaltyCache(string $key, Closure $closure, $ttl = 300)
@@ -34,9 +32,9 @@ class LoyaltyCache
         return self::getCurrentLoyaltyCache()->remember(self::makeKey($key), $ttl, $closure);
     }
 
-    public static function flushCurrentCustomerCache()
+    public static function flushCurrentCustomerCache(Phone $phone)
     {
-        self::getCurrentCustomerCache()->flush();
+        self::getCurrentCustomerCache($phone)->flush();
     }
 
     public static function deleteCurrentLoyaltyCache(string $key)

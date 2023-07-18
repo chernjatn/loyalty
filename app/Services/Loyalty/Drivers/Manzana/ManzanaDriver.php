@@ -36,11 +36,11 @@ class ManzanaDriver implements LoyaltyDriver
         $closure = fn () => transform($this->getLoyaltyCustomerByPhone($phone, $useCache), fn (LoyaltyCustomer $contact) => (new CardRequest($this->loyaltyType, $contact))->processRequest());
 
         if (!$useCache) {
-            LoyaltyCache::flushCurrentCustomerCache();
+            LoyaltyCache::flushCurrentCustomerCache($phone);
             return $closure();
         }
 
-        return LoyaltyCache::rememberCurrentCustomerCache('getloycardsbyphone:' . $phone->getPhoneNumber(), $closure);
+        return LoyaltyCache::rememberCurrentCustomerCache('getloycardsbyphone', $phone, $closure);
     }
 
     public function getLoyaltyCustomerByPhone(Phone $phone, bool $useCache = true): ?LoyaltyCustomer
@@ -79,7 +79,7 @@ class ManzanaDriver implements LoyaltyDriver
         $card = (new LoyCardCreateRequest($this->loyaltyType, $contact))->processRequest();
         if (is_null($card)) throw new LoyaltyException(__('loyalty.cant_create_contact'));
 
-        LoyaltyCache::flushCurrentCustomerCache();
+        LoyaltyCache::flushCurrentCustomerCache($customerAddDTO->getPhone());
 
         return $card;
     }
@@ -87,12 +87,13 @@ class ManzanaDriver implements LoyaltyDriver
     private function getContactByPhone(Phone $phone, bool $useCache = true)
     {
         $closure = fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
+        $key = 'getcontactbyphone:' . $phone->getPhoneNumber();
 
         if (!$useCache) {
-            LoyaltyCache::deleteCurrentLoyaltyCache($phone->getPhoneNumber());
+            LoyaltyCache::deleteCurrentLoyaltyCache($key);
             return $closure();
         }
 
-        return LoyaltyCache::rememberCurrentLoyaltyCache('getcontactbyphone:' . $phone->getPhoneNumber(), $closure);
+        return LoyaltyCache::rememberCurrentLoyaltyCache($key, $closure);
     }
 }
