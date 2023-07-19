@@ -24,7 +24,6 @@ Route::middleware('auth.api')->group(function () {
                 Route::get('card', [LoyaltyController::class, 'card']);
                 Route::post('card/{cardId}/balance', [LoyaltyController::class, 'balance']);
                 Route::post('verify', [LoyaltyController::class, 'verify']);
-                Route::post('card', [LoyaltyController::class, 'register']);
                 Route::post('create', [LoyaltyController::class, 'create']);
             });
         });
