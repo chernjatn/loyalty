@@ -2,12 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Http\Request;
 use App\Entity\Phone;
 use App\Services\Sms\NotificationService;
-
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class AddFieldBySegmentsUrl
 {
@@ -19,7 +18,7 @@ class AddFieldBySegmentsUrl
 
             $request = $request->merge(['phone' => $request->route('clientTel')]);
 
-            if (!is_null($code)) {
+            if (! is_null($code)) {
                 $request = $request->merge(['sentCode' => $code]);
             }
         }

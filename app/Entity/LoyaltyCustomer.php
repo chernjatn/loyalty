@@ -4,7 +4,7 @@ namespace App\Entity;
 
 class LoyaltyCustomer
 {
-    function __construct(
+    public function __construct(
         public readonly string $id,
         public readonly Phone $phone,
         public readonly ?string $lastName = null,
@@ -24,4 +24,3 @@ class LoyaltyCustomer
     ) {
     }
 }
-

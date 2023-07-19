@@ -2,10 +2,10 @@
 
 namespace App\Exceptions;
 
-use Exception;
-use Throwable;
-use Illuminate\Http\Response;
 use App\Exceptions\Contracts\DontReportException;
+use Exception;
+use Illuminate\Http\Response;
+use Throwable;
 
 class BadRequestException extends Exception implements DontReportException
 {
@@ -24,6 +24,7 @@ class BadRequestException extends Exception implements DontReportException
     public function setData(array $data): self
     {
         $this->data = $data;
+
         return $this;
     }
 

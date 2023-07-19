@@ -36,7 +36,7 @@
     docker-compose --build
     // 
     docker-compose up
-       ```
+    ```
 
 ## Документация API
 [Confluence: Сервис лояльности (loyalty)](https://kb.erkapharm.com/confluence/pages/viewpage.action?pageId=119835044)
@@ -44,8 +44,8 @@
 ## Линтеры
 
 ### Laravel Pint
-- `composer lint` - проверка код-стайла
-- `composer lint-fix` - проверка код-стайла с автоисправлением
+- `./vendor/bin/pint --test` - проверка код-стайла
+- `./vendor/bin/pint` - проверка код-стайла с автоисправлением
 - Правила настраиваются в файле `pint.json`
 
 ### Larastan

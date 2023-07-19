@@ -2,8 +2,8 @@
 
 namespace App\Services\Loyalty;
 
-use Illuminate\Support\Manager;
 use App\Services\Loyalty\Drivers\Manzana\ManzanaDriver;
+use Illuminate\Support\Manager;
 
 class LoyaltyManager extends Manager
 {

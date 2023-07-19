@@ -2,9 +2,8 @@
 
 namespace App\Services\Sms\Drivers;
 
-use App\Ecom\Ecom;
 use App\Ecom\Connection;
-use App\Enums\LoyaltyType;
+use App\Ecom\Ecom;
 
 class EcomSmsDriver extends BaseDriver
 {
@@ -28,10 +27,10 @@ class EcomSmsDriver extends BaseDriver
 
             $template = loyaltyType()->template();
 
-            $response->put($recipient, $this->client->post("/ecom/hs/sms/templates/$template", $this->payload($recipient)));
+            $response->put($recipient, $this->client->post("/ecom/hs/sms/templates/{$template}", $this->payload($recipient)));
         }
 
-        return (count($this->recipients) == 1) ? $response->first() : $response;
+        return (count($this->recipients) === 1) ? $response->first() : $response;
     }
 
     public function payload($recipient)
@@ -41,8 +40,8 @@ class EcomSmsDriver extends BaseDriver
             'params' => [
                 'code' => $this->body,
             ],
-            'sendNow'   => true,
-            "serviceId" => loyaltyType()->projectLogin()
+            'sendNow' => true,
+            'serviceId' => loyaltyType()->projectLogin(),
         ];
     }
 }

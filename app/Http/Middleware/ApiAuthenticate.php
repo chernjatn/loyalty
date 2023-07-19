@@ -18,7 +18,9 @@ class ApiAuthenticate extends Middleware
             $token = $request->bearerToken();
         }
 
-        if($token === config('services.api.token')) return;
+        if ($token === config('services.api.token')) {
+            return;
+        }
 
         $this->unauthenticated($request, $guards);
     }

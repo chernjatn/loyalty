@@ -2,8 +2,8 @@
 
 namespace App\Services\Sms;
 
-use Illuminate\Notifications\RoutesNotifications;
 use App\Entity\Phone;
+use Illuminate\Notifications\RoutesNotifications;
 
 class SmsNotifiable
 {
@@ -11,6 +11,7 @@ class SmsNotifiable
 
     protected string $id;
     protected Phone $phone;
+
     public function __construct(string $id, Phone $phone = null)
     {
         $this->id = $id;

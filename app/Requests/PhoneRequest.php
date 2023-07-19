@@ -27,8 +27,8 @@ class PhoneRequest extends FormRequest
     public function messages()
     {
         return [
-            'phone.required'     => __('customer.phone_required'),
-            'phone.regex'        => __('customer.phone_mallformed'),
+            'phone.required' => __('customer.phone_required'),
+            'phone.regex' => __('customer.phone_mallformed'),
         ];
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Services\Loyalty\Exceptions;
 
 use Exception;
-use Throwable;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class LoyaltyException extends Exception
 {

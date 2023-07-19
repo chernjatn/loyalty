@@ -18,7 +18,7 @@ class CustomValidationException extends BadRequestException
         return (new self($message, Response::HTTP_UNPROCESSABLE_ENTITY, $exc))
             ->setData([
                 'message' => $message,
-                'errors'  => $exc->errors(),
+                'errors' => $exc->errors(),
             ]);
     }
 }

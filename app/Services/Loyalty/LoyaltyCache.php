@@ -2,10 +2,10 @@
 
 namespace App\Services\Loyalty;
 
+use App\Entity\Phone;
 use Closure;
 use Illuminate\Cache\TaggedCache;
 use Illuminate\Support\Facades\Cache;
-use App\Entity\Phone;
 
 class LoyaltyCache
 {

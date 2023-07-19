@@ -2,13 +2,13 @@
 
 namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
-use App\Enums\LoyaltyType;
 use App\DTO\CustomerAddDTO;
 use App\Entity\Contact;
+use App\Enums\LoyaltyType;
 
 class ContactUpdateRequest extends JSONRequest
 {
-    private const REQUEST_APE_PATH  = '/Contact/Update';
+    private const REQUEST_APE_PATH = '/Contact/Update';
     private CustomerAddDTO $customerAddDTO;
     private string $contactId;
 
@@ -35,22 +35,22 @@ class ContactUpdateRequest extends JSONRequest
     protected function getContactFields()
     {
         return [
-            'id'                  => $this->contactId,
-            'MobilePhone'         => '+' . $this->customerAddDTO->getPhone()->getPhoneNumber(),
-            'EmailAddress'        => $this->customerAddDTO->getEmail(),
-            'FirstName'           => $this->customerAddDTO->getFirstname(),
-            'Lastname'            => $this->customerAddDTO->getLastname(),
-            'MiddleName'          => $this->customerAddDTO->getMiddleName() ?? '',
-            'BirthDate'           => $this->customerAddDTO->getBirthdate()->format('Y-m-d'),
-            'GenderCode'          => $this->customerAddDTO->getGender()->value,
-            'FamilyStatusCode'    => $this->customerAddDTO->getFamilyStatusCode()?->value,
-            'HasChildrenCode'     => $this->customerAddDTO->getHasChildrenCode()?->valueForManzana(),
+            'id' => $this->contactId,
+            'MobilePhone' => '+' . $this->customerAddDTO->getPhone()->getPhoneNumber(),
+            'EmailAddress' => $this->customerAddDTO->getEmail(),
+            'FirstName' => $this->customerAddDTO->getFirstname(),
+            'Lastname' => $this->customerAddDTO->getLastname(),
+            'MiddleName' => $this->customerAddDTO->getMiddleName() ?? '',
+            'BirthDate' => $this->customerAddDTO->getBirthdate()->format('Y-m-d'),
+            'GenderCode' => $this->customerAddDTO->getGender()->value,
+            'FamilyStatusCode' => $this->customerAddDTO->getFamilyStatusCode()?->value,
+            'HasChildrenCode' => $this->customerAddDTO->getHasChildrenCode()?->valueForManzana(),
             'CommunicationMethod' => $this->customerAddDTO->getCommunicationMethod()?->value,
-            'AllowNotification'   => $this->customerAddDTO->getEmailAgree(),
-            'AllowEmail'          => $this->customerAddDTO->getEmailAgree(),
-            'AllowSms'            => $this->customerAddDTO->getSmsAgree(),
-            'AllowPhone'          => $this->customerAddDTO->getPhoneAgree(),
-            'AllowPush'           => $this->customerAddDTO->getPushAgree(),
+            'AllowNotification' => $this->customerAddDTO->getEmailAgree(),
+            'AllowEmail' => $this->customerAddDTO->getEmailAgree(),
+            'AllowSms' => $this->customerAddDTO->getSmsAgree(),
+            'AllowPhone' => $this->customerAddDTO->getPhoneAgree(),
+            'AllowPush' => $this->customerAddDTO->getPushAgree(),
         ];
     }
 }

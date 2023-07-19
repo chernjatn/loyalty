@@ -7,9 +7,9 @@ class SmsVerificationRequest extends PhoneRequest
     public function rules()
     {
         return parent::rules() + [
-                'sentCode' => 'string',
-                'verificationCode' => 'required|same:sentCode',
-            ];
+            'sentCode' => 'string',
+            'verificationCode' => 'required|same:sentCode',
+        ];
     }
 
     public function getVerificationCode(): string
@@ -25,8 +25,8 @@ class SmsVerificationRequest extends PhoneRequest
     public function messages()
     {
         return parent::messages() + [
-                'verificationCode.required' => __('validation.custom.sms_verification_code'),
-                'verificationCode.same' => __('validation.custom.sms_verification_wrong'),
-            ];
+            'verificationCode.required' => __('validation.custom.sms_verification_code'),
+            'verificationCode.same' => __('validation.custom.sms_verification_wrong'),
+        ];
     }
 }

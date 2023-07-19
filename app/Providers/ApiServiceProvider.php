@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use App\Enums\LoyaltyType;
-use App\Response\ApiResponse;
-use App\Response\Response;
 use Illuminate\Support\ServiceProvider;
 
 class ApiServiceProvider extends ServiceProvider

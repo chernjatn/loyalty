@@ -7,8 +7,8 @@ class CardRequest extends SmsVerificationRequest
     public function rules()
     {
         return parent::rules() + [
-                'card' => ['required'],
-            ];
+            'card' => ['required'],
+        ];
     }
 
     public function getCard(): string
@@ -20,7 +20,7 @@ class CardRequest extends SmsVerificationRequest
     {
         return [
             'card.required' => __('loyalty.empty_field_card'),
-            'card.card'    => __('loyalty.empty_field_card'),
+            'card.card' => __('loyalty.empty_field_card'),
         ];
     }
 }

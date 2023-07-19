@@ -2,8 +2,8 @@
 
 namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
-use App\Enums\LoyaltyType;
 use App\Entity\LoyaltyCustomer;
+use App\Enums\LoyaltyType;
 
 abstract class BaseByContactRequest extends JSONRequest
 {

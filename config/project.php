@@ -4,6 +4,6 @@ return [
     'project' => [
         'superapteka',
         'samson',
-        'ozerki'
-    ]
+        'ozerki',
+    ],
 ];

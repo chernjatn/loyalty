@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
+use App\Enums\LoyaltyType;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
-use App\Enums\LoyaltyType;
 
 class RouteServiceProvider extends ServiceProvider
 {

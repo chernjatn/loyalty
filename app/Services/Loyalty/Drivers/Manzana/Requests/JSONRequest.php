@@ -14,7 +14,7 @@ abstract class JSONRequest
         'partnerId',
         'mobilePhone',
         'emailAddress',
-        'contactId'
+        'contactId',
     ];
 
     protected string $customerDomain;
@@ -28,12 +28,12 @@ abstract class JSONRequest
     {
         $config = config('manzana.loyaltyType.' . mb_strtolower($loyaltyType->name), fn () => config('manzana.default'));
 
-        $this->config         = $config;
-        $this->appId          = $config['app_id'];
+        $this->config = $config;
+        $this->appId = $config['app_id'];
         $this->customerDomain = $config['json']['customer_domain'];
-        $this->managerDomain  = $config['json']['manager_domain'];
-        $this->partnerId      = $config['json']['partner_id'];
-        $this->superSession   = $config['json']['super_session'];
+        $this->managerDomain = $config['json']['manager_domain'];
+        $this->partnerId = $config['json']['partner_id'];
+        $this->superSession = $config['json']['super_session'];
     }
 
     protected function prepareSuperQuery(array $query): array
@@ -46,7 +46,9 @@ abstract class JSONRequest
     protected function prepareQuery(array $query): array
     {
         foreach (self::ADD_SLASHES as $addSlashesKey) {
-            if (empty($query[$addSlashesKey])) continue;
+            if (empty($query[$addSlashesKey])) {
+                continue;
+            }
 
             $query[$addSlashesKey] = "'" . addslashes($query[$addSlashesKey]) . "'";
         }

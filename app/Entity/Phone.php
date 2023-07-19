@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
+use Illuminate\Support\Facades\Validator;
 use Serializable;
 use Stringable;
-use Illuminate\Support\Facades\Validator;
 
 class Phone implements Serializable, Stringable
 {
@@ -19,10 +19,10 @@ class Phone implements Serializable, Stringable
     {
         $phone = preg_replace('/[^0-9]+/', '', $phoneString);
 
-        if (!empty($phone) && $phone[0] !== '7') {
-            if (strlen($phone) === 10) {
+        if (! empty($phone) && $phone[0] !== '7') {
+            if (mb_strlen($phone) === 10) {
                 $phone = '7' . $phone;
-            } elseif (strlen($phone) === 11) {
+            } elseif (mb_strlen($phone) === 11) {
                 $phone[0] = '7';
             }
         }
@@ -52,7 +52,7 @@ class Phone implements Serializable, Stringable
     public function __serialize(): array
     {
         return [
-            'phone' => $this->phone
+            'phone' => $this->phone,
         ];
     }
 

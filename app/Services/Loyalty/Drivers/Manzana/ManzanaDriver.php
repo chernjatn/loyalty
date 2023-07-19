@@ -2,20 +2,20 @@
 
 namespace App\Services\Loyalty\Drivers\Manzana;
 
-use Illuminate\Support\Collection;
-use App\Enums\LoyaltyType;
-use App\Entity\LoyCard;
-use App\Services\Loyalty\Drivers\Contracts\LoyaltyDriver;
-use App\Entity\Phone;
-use App\Entity\LoyaltyCustomer;
 use App\DTO\CustomerAddDTO;
+use App\Entity\LoyaltyCustomer;
+use App\Entity\LoyCard;
+use App\Entity\Phone;
+use App\Enums\LoyaltyType;
+use App\Services\Loyalty\Drivers\Contracts\LoyaltyDriver;
 use App\Services\Loyalty\Drivers\Manzana\Requests\CardRequest;
 use App\Services\Loyalty\Drivers\Manzana\Requests\ContactByPhoneRequest;
-use App\Services\Loyalty\Exceptions\LoyaltyException;
 use App\Services\Loyalty\Drivers\Manzana\Requests\ContactCreateRequest;
 use App\Services\Loyalty\Drivers\Manzana\Requests\ContactUpdateRequest;
 use App\Services\Loyalty\Drivers\Manzana\Requests\LoyCardCreateRequest;
+use App\Services\Loyalty\Exceptions\LoyaltyException;
 use App\Services\Loyalty\LoyaltyCache;
+use Illuminate\Support\Collection;
 
 class ManzanaDriver implements LoyaltyDriver
 {
@@ -35,8 +35,9 @@ class ManzanaDriver implements LoyaltyDriver
     {
         $closure = fn () => transform($this->getLoyaltyCustomerByPhone($phone, $useCache), fn (LoyaltyCustomer $contact) => (new CardRequest($this->loyaltyType, $contact))->processRequest());
 
-        if (!$useCache) {
+        if (! $useCache) {
             LoyaltyCache::flushCurrentCustomerCache($phone);
+
             return $closure();
         }
 
@@ -48,8 +49,9 @@ class ManzanaDriver implements LoyaltyDriver
         $closure = fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
         $key = 'getloyaltycustomerbyphone:' . $phone->getPhoneNumber();
 
-        if (!$useCache) {
+        if (! $useCache) {
             LoyaltyCache::deleteCurrentLoyaltyCache($key);
+
             return $closure();
         }
 
@@ -60,11 +62,11 @@ class ManzanaDriver implements LoyaltyDriver
     {
         $contact = (function () use ($customerAddDTO) {
             $contact = $this->getContactByPhone($customerAddDTO->getPhone(), false);
-            if (!is_null($contact)) {
+            if (! is_null($contact)) {
                 $fields = get_object_vars($contact);
                 unset($fields['id']);
 
-                if ($customerAddDTO == new CustomerAddDTO($fields)) {
+                if ($customerAddDTO === new CustomerAddDTO($fields)) {
                     return $contact;
                 }
 
@@ -74,10 +76,14 @@ class ManzanaDriver implements LoyaltyDriver
             return (new ContactCreateRequest($this->loyaltyType, $customerAddDTO))->processRequest();
         })();
 
-        if (is_null($contact)) throw new LoyaltyException(__('loyalty.cant_create_contact'));
+        if (is_null($contact)) {
+            throw new LoyaltyException(__('loyalty.cant_create_contact'));
+        }
 
         $card = (new LoyCardCreateRequest($this->loyaltyType, $contact))->processRequest();
-        if (is_null($card)) throw new LoyaltyException(__('loyalty.cant_create_contact'));
+        if (is_null($card)) {
+            throw new LoyaltyException(__('loyalty.cant_create_contact'));
+        }
 
         LoyaltyCache::flushCurrentCustomerCache($customerAddDTO->getPhone());
 
@@ -89,8 +95,9 @@ class ManzanaDriver implements LoyaltyDriver
         $closure = fn () => (new ContactByPhoneRequest($this->loyaltyType, $phone))->processRequest();
         $key = 'getcontactbyphone:' . $phone->getPhoneNumber();
 
-        if (!$useCache) {
+        if (! $useCache) {
             LoyaltyCache::deleteCurrentLoyaltyCache($key);
+
             return $closure();
         }
 

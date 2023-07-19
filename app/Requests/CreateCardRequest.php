@@ -12,9 +12,9 @@ class CreateCardRequest extends PhoneRequest
     public function rules()
     {
         return [
-            'sessionId'         => ['required'],
-            'contactId'         => ['required'],
-            'partnerId'         => ['required'],
+            'sessionId' => ['required'],
+            'contactId' => ['required'],
+            'partnerId' => ['required'],
             'VirtualCardTypeId' => ['required'],
         ];
     }

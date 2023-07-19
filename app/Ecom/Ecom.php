@@ -13,19 +13,19 @@ class Ecom
     public function __construct(string $baseUrl, string $user, string $password)
     {
         $this->client = new Client([
-            'base_uri'              => $baseUrl,
-            RequestOptions::AUTH    => [$user, $password],
+            'base_uri' => $baseUrl,
+            RequestOptions::AUTH => [$user, $password],
             RequestOptions::HEADERS => [
                 'cache-control' => 'no-cache',
-                'connection'    => 'keep-alive',
-                'content-type'  => 'application/json',
+                'connection' => 'keep-alive',
+                'content-type' => 'application/json',
             ],
         ]);
     }
 
     public function get(string $page, array $params = [], int $timeout = 300): ?array
     {
-        if (!empty($params)) {
+        if (! empty($params)) {
             $page .= '?' . http_build_query($params);
         }
 
@@ -41,7 +41,7 @@ class Ecom
         self::prepareToken($page, $params);
 
         $response = $this->client->post($page, [
-            RequestOptions::JSON    => $params,
+            RequestOptions::JSON => $params,
             RequestOptions::TIMEOUT => $timeout,
         ]);
 
@@ -53,7 +53,7 @@ class Ecom
         self::prepareToken($page, $params);
 
         $response = $this->client->put($page, [
-            RequestOptions::JSON    => $params,
+            RequestOptions::JSON => $params,
             RequestOptions::TIMEOUT => $timeout,
         ]);
 
@@ -63,7 +63,7 @@ class Ecom
     public function delete(string $page, array $params = [], int $timeout = 300): ?array
     {
         $response = $this->client->delete($page, [
-            RequestOptions::JSON    => $params,
+            RequestOptions::JSON => $params,
             RequestOptions::TIMEOUT => $timeout,
         ]);
 
@@ -80,18 +80,18 @@ class Ecom
     public function putFile(string $path, Media $file, $timeout = 60): ?array
     {
         $response = $this->client->put($path, [
-            RequestOptions::TIMEOUT   => $timeout,
-            RequestOptions::HEADERS   => [
-                'name'                 => $file->file_name,
+            RequestOptions::TIMEOUT => $timeout,
+            RequestOptions::HEADERS => [
+                'name' => $file->file_name,
                 'nameWithoutExtension' => $file->name,
-                'extension'            => '.' . $file->getExtensionAttribute()
+                'extension' => '.' . $file->getExtensionAttribute(),
             ],
             RequestOptions::MULTIPART => [
                 [
                     'Content-type' => 'multipart/form-data',
-                    'name'         => $file->name,
-                    'filename'     => $file->file_name,
-                    'contents'     => fopen($file->getPath(), 'r'),
+                    'name' => $file->name,
+                    'filename' => $file->file_name,
+                    'contents' => fopen($file->getPath(), 'r'),
                 ],
             ],
         ]);

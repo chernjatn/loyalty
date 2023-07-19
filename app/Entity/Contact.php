@@ -6,9 +6,8 @@ class Contact extends LoyaltyCustomer
 {
     public function __construct(
         string $id,
-        Phone  $mobilePhone
-    )
-    {
+        Phone $mobilePhone
+    ) {
         parent::__construct(
             $id,
             $mobilePhone,

@@ -10,11 +10,12 @@ class RateLimiter
     protected int $maxAttempts;
     protected int $decay;
     protected BaseRateLimiter $rateLimiter;
+
     public function __construct(string $key, int $maxAttempts = 5, int $decay = 60)
     {
-        $this->key         = $key;
+        $this->key = $key;
         $this->maxAttempts = $maxAttempts;
-        $this->decay       = $decay;
+        $this->decay = $decay;
         $this->rateLimiter = app(BaseRateLimiter::class);
     }
 
@@ -31,6 +32,7 @@ class RateLimiter
     public function clear(): self
     {
         $this->rateLimiter->clear($this->key);
+
         return $this;
     }
 

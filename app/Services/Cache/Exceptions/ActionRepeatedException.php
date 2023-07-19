@@ -2,8 +2,8 @@
 
 namespace App\Services\Cache\Exceptions;
 
-use Carbon\Carbon;
 use App\Exceptions\BadRequestException;
+use Carbon\Carbon;
 
 class ActionRepeatedException extends BadRequestException
 {

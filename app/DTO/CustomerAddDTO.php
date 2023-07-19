@@ -2,13 +2,13 @@
 
 namespace App\DTO;
 
+use App\Entity\Phone;
+use App\Enums\ContactType;
+use App\Enums\FamilyStatus;
+use App\Enums\Gender;
+use App\Enums\HasChildren;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use App\Enums\FamilyStatus;
-use App\Enums\HasChildren;
-use App\Enums\ContactType;
-use App\Entity\Phone;
-use App\Enums\Gender;
 
 class CustomerAddDTO
 {
@@ -16,31 +16,30 @@ class CustomerAddDTO
     protected string $firstName;
     protected string $lastName;
     protected ?string $emailAddress;
-    protected ?string $middleName     = null;
+    protected ?string $middleName = null;
     protected bool $allowNotification = true;
-    protected bool $allowEmail        = true;
-    protected bool $allowSms          = true;
-    protected bool $allowPhone        = true;
-    protected bool $allowPush         = true;
-    protected ?Carbon $birthDate      = null;
-    protected ?Gender $genderCode     = null;
-    protected ?FamilyStatus $familyStatusCode    = null;
-    protected ?HasChildren $hasChildrenCode      = null;
-    protected ?ContactType $communicationMethod  = null;
-
+    protected bool $allowEmail = true;
+    protected bool $allowSms = true;
+    protected bool $allowPhone = true;
+    protected bool $allowPush = true;
+    protected ?Carbon $birthDate = null;
+    protected ?Gender $genderCode = null;
+    protected ?FamilyStatus $familyStatusCode = null;
+    protected ?HasChildren $hasChildrenCode = null;
+    protected ?ContactType $communicationMethod = null;
 
     public function __construct(array $fields)
     {
-        $this->emailAddress      = $fields['emailAddress'] ?? null;
-        $this->phone             = new Phone($fields['phone']);
-        $this->firstName         = Str::title($fields['firstName']);
-        $this->lastName          = Str::title($fields['lastName']);
-        $this->middleName        = Str::title($fields['middleName'] ?? '');
-        $this->allowNotification = !empty($fields['allowNotification']);
-        $this->allowEmail        = !empty($fields['allowEmail']);
-        $this->allowSms          = !empty($fields['allowSms']);
-        $this->allowPhone        = !empty($fields['allowPhone']);
-        $this->allowPush         = !empty($fields['allowPush']);
+        $this->emailAddress = $fields['emailAddress'] ?? null;
+        $this->phone = new Phone($fields['phone']);
+        $this->firstName = Str::title($fields['firstName']);
+        $this->lastName = Str::title($fields['lastName']);
+        $this->middleName = Str::title($fields['middleName'] ?? '');
+        $this->allowNotification = ! empty($fields['allowNotification']);
+        $this->allowEmail = ! empty($fields['allowEmail']);
+        $this->allowSms = ! empty($fields['allowSms']);
+        $this->allowPhone = ! empty($fields['allowPhone']);
+        $this->allowPush = ! empty($fields['allowPush']);
 
         if (isset($fields['birthDate'])) {
             $this->birthDate = Carbon::parse($fields['birthDate']);

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Requests\PhoneRequest;
-use App\Requests\ClientCreateRequest;
-use App\Requests\SmsVerificationRequest;
 use App\Requests\CardRequest;
+use App\Requests\ClientCreateRequest;
+use App\Requests\PhoneRequest;
+use App\Requests\SmsVerificationRequest;
 use App\Services\Loyalty\LoyaltyManager;
 use App\Services\Sms\NotificationService;
 use App\Services\Sms\SmsNotifiable;
@@ -20,7 +20,6 @@ class LoyaltyController extends Controller
 
     /**
      * check if there is a card
-     * @param PhoneRequest $request
      */
     public function checkIsCard(PhoneRequest $request)
     {
@@ -28,13 +27,12 @@ class LoyaltyController extends Controller
 
         return response([
             'status' => true,
-            'existsCard' => $existsCard
+            'existsCard' => $existsCard,
         ]);
     }
 
     /**
      * send code via sms
-     * @param PhoneRequest $request
      */
     public function verify(PhoneRequest $request)
     {
@@ -42,13 +40,12 @@ class LoyaltyController extends Controller
 
         return response([
             'status' => true,
-            'expirationTime' => $smsVerification->sendCode()->toTimeString()
+            'expirationTime' => $smsVerification->sendCode()->toTimeString(),
         ]);
     }
 
     /**
      * get a card
-     * @param SmsVerificationRequest $request
      */
     public function card(SmsVerificationRequest $request)
     {
@@ -56,13 +53,12 @@ class LoyaltyController extends Controller
 
         return response([
             'status' => true,
-            'card' => $cardClient
+            'card' => $cardClient,
         ]);
     }
 
     /**
      * get active balance
-     * @param CardRequest $request
      */
     public function balance(CardRequest $request)
     {
@@ -70,13 +66,12 @@ class LoyaltyController extends Controller
 
         return response([
             'status' => true,
-            'activeBalance' => $activeBalance
+            'activeBalance' => $activeBalance,
         ]);
     }
 
     /**
      * creates a new client with binding card or will update existing fields
-     * @param ClientCreateRequest $request
      */
     public function create(ClientCreateRequest $request)
     {
@@ -84,7 +79,7 @@ class LoyaltyController extends Controller
 
         return response([
             'status' => true,
-            'card' => $cardClient
+            'card' => $cardClient,
         ]);
     }
 

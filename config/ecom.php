@@ -15,5 +15,5 @@ return [
 
     'url' => env('ECOM_URL', ''),
     'login' => env('ECOM_LOGIN', ''),
-    'password' => env('ECOM_PASSWORD', '')
+    'password' => env('ECOM_PASSWORD', ''),
 ];

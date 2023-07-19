@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use App\Enums\LoyCardType;
 
 class LoyCard
@@ -27,4 +28,3 @@ class LoyCard
         return $this->balance;
     }
 }
-

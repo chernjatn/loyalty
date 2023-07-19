@@ -2,13 +2,13 @@
 
 namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
-use Illuminate\Support\Collection;
-use App\Enums\LoyCardType;
 use App\Entity\LoyCard;
+use App\Enums\LoyCardType;
+use Illuminate\Support\Collection;
 
 class CardRequest extends BaseByContactRequest
 {
-    private const CARD_FILTER_PATH     = '/Card/GetAllByContact';
+    private const CARD_FILTER_PATH = '/Card/GetAllByContact';
     private const CARD_AVAILABLE_STATUS = 2;
 
     public function processRequest(): ?Collection
@@ -17,12 +17,12 @@ class CardRequest extends BaseByContactRequest
             $this->get(
                 $this->customerDomain . self::CARD_FILTER_PATH,
                 $this->prepareSuperQuery([
-                    'contactId' => $this->contact->id
+                    'contactId' => $this->contact->id,
                 ]),
                 'value'
             ),
             function (array $card) {
-                $cardsFiltered = collect($card)->filter(fn (array $cardInfo) => $cardInfo['StatusCode'] == self::CARD_AVAILABLE_STATUS)
+                $cardsFiltered = collect($card)->filter(fn (array $cardInfo) => $cardInfo['StatusCode'] === self::CARD_AVAILABLE_STATUS)
                     ->map(
                         fn (array $cardInfo) => new LoyCard(
                             $cardInfo['Number'],
