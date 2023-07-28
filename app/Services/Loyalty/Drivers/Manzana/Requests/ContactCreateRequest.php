@@ -32,19 +32,17 @@ class ContactCreateRequest extends JSONRequest
 
     protected function getContactFields()
     {
-        $gender = 0;
-        if ($this->customerAddDTO->getGender()) {
-            $gender = $this->customerAddDTO->getGender()->value === 'm' ? 1 : 0;
-        }
-
         return [
             'MobilePhone' => '+' . $this->customerAddDTO->getPhone()->getPhoneNumber(),
             'EmailAddress' => $this->customerAddDTO->getEmail(),
             'Firstname' => $this->customerAddDTO->getFirstname(),
             'Lastname' => $this->customerAddDTO->getLastname(),
-            'MiddleName' => $this->customerAddDTO->getSecondName() ?? '',
-            'BirthDate' => $this->customerAddDTO->getBirthdate()->format('d-m-y H:i:s'),
-            'GenderCode' => $gender,
+            'MiddleName' => $this->customerAddDTO->getMiddleName() ?? '',
+            'BirthDate' => $this->customerAddDTO->getBirthdate()->format('Y-m-d'),
+            'GenderCode' => $this->customerAddDTO->getGender()->value,
+            'FamilyStatusCode' => $this->customerAddDTO->getFamilyStatusCode()?->value,
+            'HasChildrenCode' => $this->customerAddDTO->getHasChildrenCode()?->valueForManzana(),
+            'CommunicationMethod' => $this->customerAddDTO->getCommunicationMethod()?->value,
             'AllowNotification' => $this->customerAddDTO->getEmailAgree(),
             'AllowEmail' => $this->customerAddDTO->getEmailAgree(),
             'AllowSms' => $this->customerAddDTO->getSmsAgree(),
