@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redis;
 
 class AddFieldBySegmentsUrl
 {
-    public function handle(Request $request, Closure $next): Closure
+    public function handle(Request $request, Closure $next)
     {
         if ($request->route('clientTel')) {
             $key = NotificationService::keyGenerate(Phone::parse($request->route('clientTel')));

@@ -3,15 +3,13 @@
 namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
 use App\Entity\LoyCard;
-use App\Enums\LoyCardType;
-use Illuminate\Support\Collection;
 
 class CardRequest extends BaseByContactRequest
 {
     private const CARD_FILTER_PATH = '/Card/GetAllByContact';
     private const CARD_AVAILABLE_STATUS = 2;
 
-    public function processRequest(): ?Collection
+    public function processRequest(): ?LoyCard
     {
         return transform(
             $this->get(
@@ -26,21 +24,12 @@ class CardRequest extends BaseByContactRequest
                     ->map(
                         fn (array $cardInfo) => new LoyCard(
                             $cardInfo['Number'],
-                            //$this->getLoyCardType($cardInfo),
-                            empty($cardInfo['ActiveBalance']) || $cardInfo['ActiveBalance'] <= 1 ? null : $cardInfo['ActiveBalance']
+                            empty($cardInfo['ActiveBalance']) || $cardInfo['ActiveBalance'] <= 1 ? 0 : $cardInfo['ActiveBalance']
                         )
                     );
 
-                return $cardsFiltered->isEmpty() ? null : $cardsFiltered;
+                return $cardsFiltered->isEmpty() ? null : $cardsFiltered->first();
             }
         );
     }
-
-//    protected function getLoyCardType(array $cardInfo): LoyCardType
-//    {
-//        static $partnerLoycardType = null;
-//        $partnerLoycardType ??= config('manzana.partner_loycard_type');
-//
-//        return LoyCardType::from($partnerLoycardType[mb_strtoupper($cardInfo['PartnerId'])]);
-//    }
 }

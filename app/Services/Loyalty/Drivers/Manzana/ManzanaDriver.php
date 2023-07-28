@@ -31,7 +31,7 @@ class ManzanaDriver implements LoyaltyDriver
         return (bool) $this->getLoyCardByPhone($phone, true);
     }
 
-    public function getLoyCardByPhone(Phone $phone, bool $useCache = true): ?Collection
+    public function getLoyCardByPhone(Phone $phone, bool $useCache = true): ?LoyCard
     {
         $closure = fn () => transform($this->getLoyaltyCustomerByPhone($phone, $useCache), fn (LoyaltyCustomer $contact) => (new CardRequest($this->loyaltyType, $contact))->processRequest());
 

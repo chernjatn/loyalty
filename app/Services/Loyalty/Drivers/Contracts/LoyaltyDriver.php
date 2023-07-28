@@ -6,11 +6,10 @@ use App\DTO\CustomerAddDTO;
 use App\Entity\LoyaltyCustomer;
 use App\Entity\LoyCard;
 use App\Entity\Phone;
-use Illuminate\Support\Collection;
 
 interface LoyaltyDriver
 {
-    public function getLoyCardByPhone(Phone $phone): ?Collection;
+    public function getLoyCardByPhone(Phone $phone): ?LoyCard;
 
     public function getLoyaltyCustomerByPhone(Phone $phone, bool $useCache = true): ?LoyaltyCustomer;
 
