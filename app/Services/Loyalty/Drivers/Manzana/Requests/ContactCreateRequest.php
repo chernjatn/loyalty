@@ -4,6 +4,7 @@ namespace App\Services\Loyalty\Drivers\Manzana\Requests;
 
 use App\DTO\CustomerAddDTO;
 use App\Entity\Contact;
+use App\Entity\LoyaltyCustomer;
 use App\Enums\LoyaltyType;
 
 class ContactCreateRequest extends JSONRequest
@@ -17,7 +18,7 @@ class ContactCreateRequest extends JSONRequest
         $this->customerAddDTO = $customerAddDTO;
     }
 
-    /** @return ?Contact */
+    /** @return ?LoyaltyCustomer */
     public function processRequest()
     {
         return transform(
@@ -26,7 +27,7 @@ class ContactCreateRequest extends JSONRequest
                 $this->preparePostSuperQuery(['Entity' => $this->getContactFields()]),
                 'value'
             ),
-            fn ($contactId) => new Contact($contactId, $this->customerAddDTO->getPhone())
+            fn ($contactId) => new LoyaltyCustomer($contactId, $this->customerAddDTO->getPhone())
         );
     }
 

@@ -15,7 +15,6 @@ use App\Services\Loyalty\Drivers\Manzana\Requests\ContactUpdateRequest;
 use App\Services\Loyalty\Drivers\Manzana\Requests\LoyCardCreateRequest;
 use App\Services\Loyalty\Exceptions\LoyaltyException;
 use App\Services\Loyalty\LoyaltyCache;
-use Illuminate\Support\Collection;
 
 class ManzanaDriver implements LoyaltyDriver
 {
