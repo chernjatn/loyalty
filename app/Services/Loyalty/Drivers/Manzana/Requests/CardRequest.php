@@ -19,8 +19,8 @@ class CardRequest extends BaseByContactRequest
                 ]),
                 'value'
             ),
-            function (array $card) {
-                $cardsFiltered = collect($card)->filter(fn (array $cardInfo) => $cardInfo['StatusCode'] === self::CARD_AVAILABLE_STATUS)
+            function (array $cards) {
+                $cardsFiltered = collect($cards)->where('StatusCode', self::CARD_AVAILABLE_STATUS)
                     ->map(
                         fn (array $cardInfo) => new LoyCard(
                             $cardInfo['Number'],
