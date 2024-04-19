@@ -18,9 +18,7 @@ class LoyaltyController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    /**
-     * check if there is a card
-     */
+
     public function checkIsCard(PhoneRequest $request)
     {
         $existsCard = $this->getLoyaltyManager()->existsCard($request->getPhone());
@@ -31,9 +29,7 @@ class LoyaltyController extends Controller
         ]);
     }
 
-    /**
-     * send code via sms
-     */
+
     public function verify(PhoneRequest $request)
     {
         $smsVerification = new NotificationService(new SmsNotifiable(session()->getId(), $request->getPhone()));
@@ -44,9 +40,7 @@ class LoyaltyController extends Controller
         ]);
     }
 
-    /**
-     * get a card
-     */
+
     public function card(SmsVerificationRequest $request)
     {
         $cardClient = $this->getLoyaltyManager()->getLoyCardByPhone($request->getPhone())?->number;
@@ -57,9 +51,7 @@ class LoyaltyController extends Controller
         ]);
     }
 
-    /**
-     * get active balance
-     */
+
     public function balance(CardRequest $request)
     {
         $activeBalance = $this->getLoyaltyManager()->getLoyCardByPhone($request->getPhone())?->balance;
@@ -70,9 +62,7 @@ class LoyaltyController extends Controller
         ]);
     }
 
-    /**
-     * creates a new client with binding card or will update existing fields
-     */
+
     public function create(ClientCreateRequest $request)
     {
         $cardClient = $this->getLoyaltyManager()->registerLoyCard($request->getDTO())->number;
@@ -83,9 +73,7 @@ class LoyaltyController extends Controller
         ]);
     }
 
-    /**
-     * @return LoyaltyManager
-     */
+
     public function getLoyaltyManager()
     {
         return new LoyaltyManager(app());
